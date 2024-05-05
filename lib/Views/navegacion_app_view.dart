@@ -24,8 +24,8 @@ class _NavegacionAppViewState extends State<NavegacionAppView> {
         toolbarHeight: 15.w,
         centerTitle: true,
         titleSpacing: 0,
-        backgroundColor: AppThemes.headerBackground,
-        title: Text('Post Me!', style: TextStyle(fontSize: 17.sp),),
+        //backgroundColor: AppThemes.headerBackground,
+        title: Text('Post Me!', style: TextStyle(fontSize: 19.sp, fontWeight: FontWeight.bold),),
         elevation: 0,
       ),
       body: PageView.builder(
@@ -38,12 +38,17 @@ class _NavegacionAppViewState extends State<NavegacionAppView> {
         physics: const NeverScrollableScrollPhysics(), //! Tal vez si cambio esto, permita el scroll horizontal
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: AppThemes.bottomNavigationBar, //! Este color no se ve
+        /* backgroundColor: Colors.black, //! Este color no se ve
+        elevation: 0, */
+        fixedColor: AppThemes.botonSeleccionado,
+        
+        backgroundColor: AppThemes.bottomNavigationBar,
+        type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
-        selectedItemColor: AppThemes.botonSeleccionado,
+        /* selectedItemColor: AppThemes.botonSeleccionado,
         unselectedItemColor: AppThemes.botonNoSeleccionado,
         showSelectedLabels: false,
-        showUnselectedLabels: false,
+        showUnselectedLabels: false, */
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
@@ -83,9 +88,9 @@ class _PageItemState extends State<PageItem> with AutomaticKeepAliveClientMixin{
     super.build(context);
     if (widget.index == 0) {
       return const InicioWidget();
-    } else if(widget.index == 2) {
+    } else if(widget.index == 1) {
       return const CrearPublicacionWidget();
-    } else if(widget.index == 3) {
+    } else if(widget.index == 2) {
       return const PerfilWidget();
     } else {
       return const ConfiguracionWidget();

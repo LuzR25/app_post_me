@@ -1,6 +1,9 @@
-import 'package:app_post_me/Widgets/tarjeta_publicacion_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+
+import '../Themes/app_themes.dart';
+import '../Widgets/widgets.dart';
 
 class InicioWidget extends StatefulWidget {
   const InicioWidget({super.key});
@@ -13,6 +16,7 @@ class _InicioWidgetState extends State<InicioWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(AppThemes.paddingInicio),
       children: [
         TarjetaPublicacionWidget(nombreUsuario: 'acuablast', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
         SizedBox(height: 3.h),

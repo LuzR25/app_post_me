@@ -64,7 +64,7 @@ class _LoginViewState extends State<LoginView> {
             Text(
               'Post Me!',
               style: TextStyle(
-                fontSize: 50.sp,
+                fontSize: 40.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),

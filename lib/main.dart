@@ -1,12 +1,11 @@
 import 'dart:io';
+import 'package:app_post_me/Providers/providers.dart';
+import 'package:app_post_me/Routes/routes.dart';
+import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:flutter/material.dart';
-
-import 'Providers/providers.dart';
-import 'Routes/routes.dart';
-import 'Themes/app_themes.dart';
 
 class PostHttpOverrides extends HttpOverrides {
   @override

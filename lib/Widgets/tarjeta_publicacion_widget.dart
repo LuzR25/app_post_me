@@ -1,3 +1,4 @@
+import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -20,9 +21,12 @@ class TarjetaPublicacionWidget extends StatelessWidget {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(2.w),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               //Foto de perfil
               CircleAvatar(
@@ -30,8 +34,10 @@ class TarjetaPublicacionWidget extends StatelessWidget {
                 radius: 5.h,
               ),
 
+              SizedBox(width: 4.w),
+
               //Nombre de usuario y fecha
-              Row(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -39,16 +45,16 @@ class TarjetaPublicacionWidget extends StatelessWidget {
                     nombreUsuario,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 13.sp,
+                      fontSize: AppThemes.textoSize,
                       fontWeight: FontWeight.bold
                     ),
                   ),
 
                   Text(
-                    fechaPublicacion.toString(),
+                    "${fechaPublicacion.day} ${fechaPublicacion.month} ${fechaPublicacion.year}",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 13.sp,
+                      fontSize: AppThemes.fechaTarjetaSize,
                       fontWeight: FontWeight.normal
                     ),
                   ),
@@ -60,18 +66,21 @@ class TarjetaPublicacionWidget extends StatelessWidget {
           //Descripción
           Text(
             descripcion,
+            textAlign: TextAlign.justify,
             style: TextStyle(
-              fontSize: 10.sp,
+              fontSize: AppThemes.textoSize,
               color: Colors.black
             ),
           ),
 
-          SizedBox(
-            width: 80.w,
-            child: Image.asset(
-              imagen,
-              alignment: Alignment.center,
-              fit: BoxFit.contain, ),
+          Center(
+            child: SizedBox(
+              width: 100.w,
+              child: Image.asset(
+                imagen,
+                alignment: Alignment.center,
+                fit: BoxFit.contain, ),
+            ),
           ) //! Luego definir bien los tamaños y demás
         ],
       ),
