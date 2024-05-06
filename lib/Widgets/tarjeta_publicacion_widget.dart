@@ -63,6 +63,8 @@ class TarjetaPublicacionWidget extends StatelessWidget {
             ],
           ),
 
+          SizedBox(height: 1.h,),
+
           //Descripción
           Text(
             descripcion,
@@ -73,6 +75,9 @@ class TarjetaPublicacionWidget extends StatelessWidget {
             ),
           ),
 
+          SizedBox(height: 1.h,),
+
+          //Imagen
           Center(
             child: SizedBox(
               width: 100.w,
