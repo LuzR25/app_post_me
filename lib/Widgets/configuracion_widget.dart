@@ -36,60 +36,78 @@ class ConfiguracionWidget extends StatelessWidget {
     );
   }
 
-  TextButton botonCerrarSesion(ButtonStyle estilo) {
-    return TextButton(
-        onPressed: () {},
-        style: estilo,
-        child: Text(
-          'Cerrar sesión',
-          style: TextStyle(
-              fontSize: AppThemes.botonFontSize,
-              //fontWeight: FontWeight.bold,
-              color: Colors
-                  .red[700] //!Necesito que los botones se expandan a lo ancho
-              ),
-        ));
+  Flex botonCerrarSesion(ButtonStyle estilo) {
+    return Flex(direction: Axis.horizontal, children: [
+      Expanded(
+        child: TextButton(
+            onPressed: () {},
+            style: estilo,
+            child: Text(
+              'Cerrar sesión',
+              style: TextStyle(
+                  fontSize: AppThemes.botonFontSize,
+                  //fontWeight: FontWeight.bold,
+                  color: Colors.red[
+                      700] //!Necesito que los botones se expandan a lo ancho
+                  ),
+            )),
+      )
+    ]);
   }
 
-  TextButton botonAcercaDe(ButtonStyle estilo) {
-    return TextButton(
-        onPressed: () {},
-        style: estilo,
-        child: Text(
-          'Acerca de',
-          style: TextStyle(
-              fontSize: AppThemes.botonFontSize,
-              //fontWeight: FontWeight.bold,
-              color: Colors.black),
-        ));
+  Flex botonAcercaDe(ButtonStyle estilo) {
+    return Flex(direction: Axis.horizontal, children: [
+      Expanded(
+        child: TextButton(
+            onPressed: () {},
+            style: estilo,
+            child: Text(
+              'Acerca de',
+              //textAlign: TextAlign.start,
+              style: TextStyle(
+                  fontSize: AppThemes.botonFontSize,
+                  //fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            )),
+      )
+    ]);
   }
 
-  TextButton botonGitHub(ButtonStyle estilo) {
-    return TextButton(
-        onPressed: _launchURL,
-        style: estilo,
-        child: Text(
-          'Ver más en GitHub',
-          style: TextStyle(
-              fontSize: AppThemes.botonFontSize,
-              //fontWeight: FontWeight.bold,
-              color: Colors.black),
-        ));
+  Flex botonGitHub(ButtonStyle estilo) {
+    return Flex(direction: Axis.horizontal, children: [
+      Expanded(
+        child: TextButton(
+            onPressed: _launchURL,
+            style: estilo,
+            child: Text(
+              'Ver más en GitHub',
+              style: TextStyle(
+                  fontSize: AppThemes.botonFontSize,
+                  //fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            )),
+      )
+    ]);
   }
 
-  TextButton botonModificarCuenta(ButtonStyle estilo) {
-    return TextButton(
-        onPressed: () {},
-        style: estilo,
-        child: Text(
-          'Modificar datos de cuenta',
-          style: TextStyle(
-              fontSize: AppThemes.botonFontSize,
-              //fontWeight: FontWeight.bold,
-              color: Colors.black),
-        ));
+  Flex botonModificarCuenta(ButtonStyle estilo) {
+    return Flex(
+      direction: Axis.horizontal,
+      children: [
+        Expanded(
+            child: TextButton(
+                onPressed: () {},
+                style: estilo,
+                child: Text(
+                  'Modificar datos de cuenta',
+                  style: TextStyle(
+                      fontSize: AppThemes.botonFontSize,
+                      //fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                )))
+      ],
+    );
   }
-  
 
   _launchURL() async {
     const url = 'https://github.com/LuzR25/app_post_me.git';
