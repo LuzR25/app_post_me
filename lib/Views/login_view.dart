@@ -197,7 +197,7 @@ class _LoginViewState extends State<LoginView> {
           }
           setState(() {});
         } else {
-          RegistroProvider().mostrarToast(
+          PublicacionProvider().mostrarToast(
               'Los campos para tu usuario y contraseña no pueden estar vacíos');
         }
       },

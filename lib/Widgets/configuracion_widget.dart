@@ -20,13 +20,13 @@ class ConfiguracionWidget extends StatelessWidget {
       padding: EdgeInsets.all(AppThemes.paddingAppGeneral),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        //mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
             'Configuración',
             style: TextStyle(
                 fontSize: AppThemes.tituloSize, fontWeight: FontWeight.bold),
           ),
+          SizedBox(height: 2.h,),
           botonModificarCuenta(estilo),
           botonGitHub(estilo),
           botonAcercaDe(estilo),

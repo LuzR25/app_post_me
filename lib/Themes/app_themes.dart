@@ -11,7 +11,7 @@ class AppThemes {
   static double botonFontSize = 16.sp;
   static double paddingInicio = 1.5.h;
   static double paddingAppGeneral = 3.h;
-  static double tituloSize = 18.sp;
+  static double tituloSize = 18.5.sp;
   static double textoSize = 14.sp;
   static double fechaTarjetaSize = 13.sp;
 

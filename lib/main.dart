@@ -28,7 +28,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => RegistroProvider()),
+        ChangeNotifierProvider(create: (_) => PublicacionProvider()),
       ],
       child: const MyApp(),
     ),
@@ -45,21 +45,21 @@ Future<void> main() async {
   )); */
 }
 
-class AppState extends StatelessWidget {
+/* class AppState extends StatelessWidget {
   const AppState({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => RegistroProvider()),
+        ChangeNotifierProvider(create: (_) => PublicacionProvider()),
         /* ChangeNotifierProvider(create: (_) => PageControllerProvider()),
         ChangeNotifierProvider(create: (_) => LicenciasProvider()), */
       ],
       child: const MyApp()
     );
   }
-}
+} */
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

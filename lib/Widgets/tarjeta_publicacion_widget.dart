@@ -84,7 +84,7 @@ class TarjetaPublicacionWidget extends StatelessWidget {
               child: Image.asset(
                 imagen,
                 alignment: Alignment.center,
-                fit: BoxFit.contain, ),
+                fit: BoxFit.fitWidth, ),
             ),
           ) //! Luego definir bien los tamaños y demás
         ],

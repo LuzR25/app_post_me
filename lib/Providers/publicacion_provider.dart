@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 
-class RegistroProvider extends ChangeNotifier {
+class PublicacionProvider extends ChangeNotifier {
   //Para mostrar los registros en historial_asistencias_widget
   String? fotoBase64;
   Uint8List? bytesFoto;
