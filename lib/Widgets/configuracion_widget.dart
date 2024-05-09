@@ -1,6 +1,7 @@
 import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfiguracionWidget extends StatelessWidget {
   const ConfiguracionWidget({super.key});
@@ -65,7 +66,7 @@ class ConfiguracionWidget extends StatelessWidget {
 
   TextButton botonGitHub(ButtonStyle estilo) {
     return TextButton(
-        onPressed: () {},
+        onPressed: _launchURL,
         style: estilo,
         child: Text(
           'Ver más en GitHub',
@@ -87,5 +88,16 @@ class ConfiguracionWidget extends StatelessWidget {
               //fontWeight: FontWeight.bold,
               color: Colors.black),
         ));
+  }
+  
+
+  _launchURL() async {
+    const url = 'https://github.com/LuzR25/app_post_me.git';
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'No se puede abrir el repositorio';
+    }
   }
 }
