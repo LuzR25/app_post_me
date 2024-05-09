@@ -1,6 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Cámara-->
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!--Internet-->
+    <uses-permission android:name="android.permission.INTERNET" />
+    
     <application
-        android:label="app_post_me"
+        android:label="Post Me!"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
