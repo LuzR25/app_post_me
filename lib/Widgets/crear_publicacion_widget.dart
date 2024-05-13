@@ -1,6 +1,10 @@
+import 'package:app_post_me/Models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../Controllers/controllers.dart';
+import '../Providers/providers.dart';
 import '../Themes/app_themes.dart';
 import '../Widgets/widgets.dart';
 
@@ -14,9 +18,12 @@ class CrearPublicacionWidget extends StatefulWidget {
 class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
   final _comentarioController = TextEditingController();
   final FocusNode _focusComentario = FocusNode();
+  PublicacionesController publicacionesController = PublicacionesController();
 
   @override
   Widget build(BuildContext context) {
+    final publicacionProvider = Provider.of<PublicacionProvider>(context);
+
     return ListView(
       padding: EdgeInsets.all(AppThemes.paddingAppGeneral),
       children: [
@@ -65,7 +72,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
         SizedBox(height: 2.h),
 
         const BotonSeleccionarFoto(),
-          
+
         /* Center(
             child: SizedBox(
               width: 100.w,
@@ -77,24 +84,8 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
           ), */
 
         SizedBox(height: 2.h),
-          
-        TextButton(
-            onPressed: () {},
-            style: ButtonStyle(
-        padding: MaterialStatePropertyAll(
-            EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w)),
-        shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20)))),
-        backgroundColor:
-            const MaterialStatePropertyAll(AppThemes.botonBackground)),
-            child: Text(
-              'Publicar',
-              //textAlign: TextAlign.start,
-              style: TextStyle(
-                  fontSize: AppThemes.botonFontSize,
-                  //fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            )),
+
+        botonPublicar(publicacionProvider),
 
         /* Image.memory(
           "",
@@ -104,5 +95,34 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
       ],
     );
   }
-}
 
+  TextButton botonPublicar(PublicacionProvider publicacionProvider) {
+    return TextButton(
+        onPressed: () async {
+          Publicacion publicacion = Publicacion(foto: publicacionProvider.fotoBase64!, idUsuario: 0);
+
+          dynamic resultado = await publicacionesController.crearPublicacion(publicacion: publicacion);
+
+          if (resultado == true) {
+            publicacionProvider.mostrarToast("¡Lo hicimos, Victor!");
+          } else {
+            publicacionProvider.mostrarToast("No servimos");
+          } 
+        },
+        style: ButtonStyle(
+            padding: MaterialStatePropertyAll(
+                EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w)),
+            shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)))),
+            backgroundColor:
+                const MaterialStatePropertyAll(AppThemes.botonBackground)),
+        child: Text(
+          'Publicar',
+          //textAlign: TextAlign.start,
+          style: TextStyle(
+              fontSize: AppThemes.botonFontSize,
+              //fontWeight: FontWeight.bold,
+              color: Colors.black),
+        ));
+  }
+}
