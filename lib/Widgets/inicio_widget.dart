@@ -18,17 +18,17 @@ class _InicioWidgetState extends State<InicioWidget> {
     return ListView(
       padding: EdgeInsets.all(AppThemes.paddingInicio),
       children: [
-        TarjetaPublicacionWidget(nombreUsuario: 'acuablast', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
+        TarjetaPublicacionWidget(nombreUsuario: 'acuablast', fechaPublicacion: "10 de abril de 2024", descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
         SizedBox(height: 3.h),
-        TarjetaPublicacionWidget(nombreUsuario: 'meleatwygrey', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
+        TarjetaPublicacionWidget(nombreUsuario: 'meleatwygrey', fechaPublicacion: "10 de abril de 2024", descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
         SizedBox(height: 3.h),
-        TarjetaPublicacionWidget(nombreUsuario: 'luciernaga', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
+        TarjetaPublicacionWidget(nombreUsuario: 'luciernaga', fechaPublicacion: "10 de abril de 2024", descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
         SizedBox(height: 3.h),
-        TarjetaPublicacionWidget(nombreUsuario: 'angel', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
+        TarjetaPublicacionWidget(nombreUsuario: 'angel', fechaPublicacion: "10 de abril de 2024", descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
         SizedBox(height: 3.h),
-        TarjetaPublicacionWidget(nombreUsuario: 'luzr', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
+        TarjetaPublicacionWidget(nombreUsuario: 'luzr', fechaPublicacion: "10 de abril de 2024", descripcion: 'Probando.', imagen: 'assets/images/vaca.png'),
         SizedBox(height: 3.h),
-        TarjetaPublicacionWidget(nombreUsuario: 'persona123', fechaPublicacion: DateTime(2024, 4, 10), descripcion: 'Probando.', imagen: 'assets/images/vaca.png')
+        TarjetaPublicacionWidget(nombreUsuario: 'persona123', fechaPublicacion: "10 de abril de 2024", descripcion: 'Probando.', imagen: 'assets/images/vaca.png')
       ],
     );
   }

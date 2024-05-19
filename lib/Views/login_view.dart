@@ -1,10 +1,11 @@
-
 //import 'dart:async';
 
 import 'dart:async';
 
 import 'package:app_post_me/Themes/app_themes.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sizer/sizer.dart';
 
 import '../Providers/providers.dart';
@@ -46,12 +47,17 @@ class _LoginViewState extends State<LoginView> {
     );
     //final registroProvider = Provider.of<RegistroProvider>(context);
 
-    return SafeArea(
-      child: Scaffold(
-        body: Stack(
-          children: <Widget>[
-            //Contenedor en el que se agrega la imagen del logo de la empresa
-            /* Container(
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+      ),
+      backgroundColor: AppThemes.botonBackground,
+      body: Stack(
+        //crossAxisAlignment: CrossAxisAlignment.center,
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          //Contenedor en el que se agrega la imagen del logo de la empresa
+          /* Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(vertical: 4.5.h, horizontal: 10.w),
               child: Image.asset(
@@ -59,9 +65,10 @@ class _LoginViewState extends State<LoginView> {
                 height: 20.h,
               ),
             ), */
-
-            //Nombre de la app
-            Text(
+          
+          Padding(
+            padding:EdgeInsets.symmetric(vertical: 4.5.h, horizontal: 10.w),
+            child: Text(
               'Post Me!',
               style: TextStyle(
                 fontSize: 40.sp,
@@ -70,88 +77,92 @@ class _LoginViewState extends State<LoginView> {
               ),
               textAlign: TextAlign.center,
             ),
+          ),
 
-            //Se crea una tarjeta centrada para que muestre el login
-            //Esta tarjeta se puede sobreponer sobre el logo
-            Center(
-              child: Card(
-                margin: EdgeInsets.only(
-                  left: 5.3.w,
-                  right: 5.3.w,
-                  top: 3.h,
+          //Se crea una tarjeta centrada para que muestre el login
+          //Esta tarjeta se puede sobreponer sobre el logo
+          Center(
+            child: Card(
+              color: Colors.white,
+              margin: EdgeInsets.symmetric(horizontal: 5.3.w, vertical: 0),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8.w,
+                  vertical: 2.h,
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 8.w,
-                    vertical: 4.h,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      //Usuario
-                      Text(
-                        'Escribe tu nombre de usuario',
-                        style: TextStyle(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    //Usuario
+                    Text(
+                      'Escribe tu nombre de usuario',
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.sp),
+                      textAlign: TextAlign.right,
+                    ),
+                    SizedBox(height: 1.5.h),
+                    _userTextFormField(
+                        enabledBorder: enabledBorder,
+                        focusedBorder: focusedBorder,
+                        errorBorder: errorBorder,
+                        focusedErrorBorder: focusedErrorBorder),
+
+                    SizedBox(height: 5.h),
+
+                    //Contraseña
+                    Text(
+                      'Escribe tu contraseña',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15.sp),
+                      textAlign: TextAlign.right,
+                    ),
+                    SizedBox(height: 1.5.h),
+                    _passwordTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+                    SizedBox(height: 3.h),
+                    
+                    Center(child: _iniciarSesionBoton(/* registroProvider */)),
+
+                    SizedBox(height: 3.h),
+                        
+                    Text(
+                      '¿Aún no eres usuario? Regístrate ',
+                      style: TextStyle(fontSize: 14.sp),
+                    ),
+                        
+                    Center(
+                      child: TextButton(
+                        style: const ButtonStyle(
+                          padding: MaterialStatePropertyAll(
+                            EdgeInsets.all(0))
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'registro');
+                        },
+                        child: Text(
+                          'aquí',
+                          style: TextStyle(
+                            fontSize: 14.sp,
                             color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.7.sp),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 3.h),
-                      _userTextFormField(
-                          enabledBorder: enabledBorder,
-                          focusedBorder: focusedBorder,
-                          errorBorder: errorBorder,
-                          focusedErrorBorder: focusedErrorBorder),
-
-                      SizedBox(height: 5.h),
-
-                      //Contraseña
-                      Text(
-                        'Escribe tu contraseña',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.7.sp),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 3.h),
-                      _passwordTextFormField(
-                          enabledBorder: enabledBorder,
-                          focusedBorder: focusedBorder,
-                          errorBorder: errorBorder,
-                          focusedErrorBorder: focusedErrorBorder),
-                      SizedBox(height: 3.h),
-                      _iniciarSesionBoton(/* registroProvider */),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            Center(
-              child: Column(
-                        children: [
-                          Text(
-                            '¿Aún no eres usuario? Regístrate ',
-                            style: TextStyle( fontSize: 16.sp ),
+                            fontWeight: FontWeight.bold
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'registro');
-                            }, 
-                            child: Text(
-                              'aquí', 
-                              style: TextStyle(
-                                fontSize: 16.sp, 
-                                fontWeight: FontWeight.bold),
-                            )
-                          )
-                        ],
+                        )
                       ),
-            )
-          ],
-        ),
+                    )
+                  ]
+                ),
+              )
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -160,16 +171,17 @@ class _LoginViewState extends State<LoginView> {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
-              EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 11.w)),
+              EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 8.w)),
           shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(7)))),
-          backgroundColor: const MaterialStatePropertyAll(AppThemes.headerBackground)),
+              borderRadius: BorderRadius.all(Radius.circular(15)))),
+          backgroundColor:
+              const MaterialStatePropertyAll(AppThemes.headerBackground)),
       onPressed: () async {
         if (userController.text.isNotEmpty &&
             passwordController.text.isNotEmpty) {
           _ponerRuedaCargando(); //Mostramos rueda de carga
 
-          Timer(const Duration(seconds: 2), () { });
+          Timer(const Duration(seconds: 2), () {});
 
           //* Manejo del acceso a la cuenta consumiento la API
           bool iniciaSesion = true;
@@ -202,8 +214,9 @@ class _LoginViewState extends State<LoginView> {
         }
       },
       child: Text(
-        'Inicio',
-        style: TextStyle(color: Colors.white, fontSize: 13.sp),
+        'Iniciar sesión',
+        style:
+            TextStyle(color: Colors.black, fontSize: AppThemes.botonFontSize),
       ),
     );
   }
@@ -214,6 +227,7 @@ class _LoginViewState extends State<LoginView> {
       required OutlineInputBorder errorBorder,
       required OutlineInputBorder focusedErrorBorder}) {
     return TextFormField(
+      cursorColor: Colors.black,
       controller: passwordController,
       decoration: InputDecoration(
         labelText: 'Contraseña',
@@ -237,7 +251,7 @@ class _LoginViewState extends State<LoginView> {
         ),
         fillColor: Colors.blueGrey[50],
         labelStyle: TextStyle(fontSize: 12.5.sp),
-        contentPadding: EdgeInsets.symmetric(vertical: 2.9.h, horizontal: 6.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
         enabledBorder: enabledBorder,
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,
@@ -261,6 +275,7 @@ class _LoginViewState extends State<LoginView> {
       required OutlineInputBorder errorBorder,
       required OutlineInputBorder focusedErrorBorder}) {
     return TextFormField(
+      cursorColor: Colors.black,
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.emailAddress,
       controller: userController,
@@ -268,7 +283,7 @@ class _LoginViewState extends State<LoginView> {
         labelText: 'Usuario',
         fillColor: Colors.blueGrey[50],
         labelStyle: TextStyle(fontSize: 12.5.sp),
-        contentPadding: EdgeInsets.symmetric(vertical: 2.9.h, horizontal: 6.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
         enabledBorder: enabledBorder,
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,

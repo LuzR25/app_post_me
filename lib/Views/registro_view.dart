@@ -33,75 +33,96 @@ class _RegistroViewState extends State<RegistroView> {
       borderSide: const BorderSide(color: Color.fromARGB(255, 192, 36, 36)),
       borderRadius: BorderRadius.circular(10),
     );
+    
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 15.w,
+        centerTitle: true,
+        titleSpacing: 0,
+        //backgroundColor: AppThemes.headerBackground,
+        title: Text(
+          'Post Me!',
+          style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
+        ),
+        elevation: 0,
+      ),
+      body: Padding(
+          padding: EdgeInsets.all(5.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    //Foto de perfil
+                    CircleAvatar(
+                      backgroundImage:
+                          const AssetImage("assets/images/vaca.png"), //A ver si esto funciona
+                      radius: 8.h,
+                    ),
+          
+                    _botonSeleccionarFoto()
+                  ],
+                ),
 
-    //! Luego checar si el column no causa problemas de visualización a la hora empezar a escribir
-    //! De ser así, puedo intetar algo con Stack, similar a lo que hay en el login
-    return Padding(
-      //Debo checar bien este dato para asegurarse de que todas las vistas de la aplicación tengan ese padding
-      padding: EdgeInsets.all(5.w),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              //Foto de perfil
-              CircleAvatar(
-                backgroundImage:
-                    const AssetImage("assets/images/vaca.png"), //A ver si esto funciona
-                radius: 5.h,
-              ),
-
-              _botonSeleccionarFoto()
-            ],
-          ),
-
-          //Campo 'Nombre del perfil'
-          encabezadoTextField('Nombre del perfil'),
-          SizedBox(height: 3.h),
-          _nombrePerfilTextFormField(
-              enabledBorder: enabledBorder,
-              focusedBorder: focusedBorder,
-              errorBorder: errorBorder,
-              focusedErrorBorder: focusedErrorBorder),
-
-          SizedBox(height: 5.h),
-
-          //Campo 'Nombre de usuario'
-          encabezadoTextField('Nombre de usuario'),
-          SizedBox(height: 3.h),
-          _nombreUsuarioTextFormField(
-              enabledBorder: enabledBorder,
-              focusedBorder: focusedBorder,
-              errorBorder: errorBorder,
-              focusedErrorBorder: focusedErrorBorder),
-
-          SizedBox(height: 5.h),
-
-          //Campo 'Contraseña'
-          encabezadoTextField('Contraseña'),
-          SizedBox(height: 3.h),
-          _passwordTextFormField(
-              enabledBorder: enabledBorder,
-              focusedBorder: focusedBorder,
-              errorBorder: errorBorder,
-              focusedErrorBorder: focusedErrorBorder),
-
-          SizedBox(height: 5.h),
-
-          //Campo 'Confirmar contraseña'
-          encabezadoTextField('Confirmar contraseña'),
-          SizedBox(height: 3.h),
-          _repasswordTextFormField(
-              enabledBorder: enabledBorder,
-              focusedBorder: focusedBorder,
-              errorBorder: errorBorder,
-              focusedErrorBorder: focusedErrorBorder),
-
-          SizedBox(height: 10.h),
-
-          _botonRegistrar()
-        ],
+                SizedBox(height: 2.h),
+          
+                //Campo 'Nombre del perfil'
+                encabezadoTextField('Nombre del perfil'),
+                SizedBox(height: 1.h),
+                _nombrePerfilTextFormField(
+                    enabledBorder: enabledBorder,
+                    focusedBorder: focusedBorder,
+                    errorBorder: errorBorder,
+                    focusedErrorBorder: focusedErrorBorder),
+          
+                SizedBox(height: 2.h),
+          
+                //Campo 'Nombre de usuario'
+                encabezadoTextField('Nombre de usuario'),
+                SizedBox(height: 1.h),
+          
+                SizedBox(
+                  child: _nombreUsuarioTextFormField(
+                    enabledBorder: enabledBorder,
+                    focusedBorder: focusedBorder,
+                    errorBorder: errorBorder,
+                    focusedErrorBorder: focusedErrorBorder),
+                ),
+                
+          
+                SizedBox(height: 2.h),
+          
+                //Campo 'Contraseña'
+                encabezadoTextField('Contraseña'),
+                SizedBox(height: 1.h),
+                _passwordTextFormField(
+                    enabledBorder: enabledBorder,
+                    focusedBorder: focusedBorder,
+                    errorBorder: errorBorder,
+                    focusedErrorBorder: focusedErrorBorder),
+          
+                SizedBox(height: 2.h),
+          
+                //Campo 'Confirmar contraseña'
+                encabezadoTextField('Confirmar contraseña'),
+                SizedBox(height: 2.h),
+                _repasswordTextFormField(
+                    enabledBorder: enabledBorder,
+                    focusedBorder: focusedBorder,
+                    errorBorder: errorBorder,
+                    focusedErrorBorder: focusedErrorBorder),
+          
+                SizedBox(height: 4.5.h),
+          
+                Center(child: _botonRegistrar())
+              ],
+            ),
       ),
     );
   }
@@ -119,15 +140,15 @@ class _RegistroViewState extends State<RegistroView> {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
-              EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 11.w)),
+              EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w)),
           shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)))),
+              borderRadius: BorderRadius.all(Radius.circular(100)))),
           backgroundColor:
               const MaterialStatePropertyAll(AppThemes.botonBackground)),
       child: Text(
         'Seleccionar foto',
         style: TextStyle(
-            fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold),
+            fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
       onPressed: () {},
     );
@@ -137,15 +158,15 @@ class _RegistroViewState extends State<RegistroView> {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
-              EdgeInsets.symmetric(vertical: 2.5.h, horizontal: 11.w)),
+              EdgeInsets.symmetric(vertical: 1.h, horizontal: 5.w)),
           shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15)))),
+              borderRadius: BorderRadius.all(Radius.circular(100)))),
           backgroundColor:
               const MaterialStatePropertyAll(AppThemes.botonBackground)),
       child: Text(
         'Registrar',
         style: TextStyle(
-            fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold),
+            fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
       onPressed: () {},
     );
@@ -164,7 +185,7 @@ class _RegistroViewState extends State<RegistroView> {
         labelText: 'Nombre del perfil',
         fillColor: Colors.white,
         labelStyle: TextStyle(fontSize: 12.5.sp),
-        contentPadding: EdgeInsets.symmetric(vertical: 2.9.h, horizontal: 6.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
         enabledBorder: enabledBorder,
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,
@@ -194,7 +215,7 @@ class _RegistroViewState extends State<RegistroView> {
         labelText: 'Nombre de usuario',
         fillColor: Colors.white,
         labelStyle: TextStyle(fontSize: 12.5.sp),
-        contentPadding: EdgeInsets.symmetric(vertical: 2.9.h, horizontal: 6.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
         enabledBorder: enabledBorder,
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,
@@ -224,7 +245,7 @@ class _RegistroViewState extends State<RegistroView> {
         labelText: 'Contraseña',
         fillColor: Colors.white,
         labelStyle: TextStyle(fontSize: 12.5.sp),
-        contentPadding: EdgeInsets.symmetric(vertical: 2.9.h, horizontal: 6.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
         enabledBorder: enabledBorder,
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,
@@ -247,14 +268,14 @@ class _RegistroViewState extends State<RegistroView> {
       required OutlineInputBorder errorBorder,
       required OutlineInputBorder focusedErrorBorder}) {
     return TextFormField(
-      textInputAction: TextInputAction.next,
+      textInputAction: TextInputAction.done,
       keyboardType: TextInputType.name,
       controller: repasswordController,
       decoration: InputDecoration(
         labelText: 'Contraseña',
         fillColor: Colors.white,
         labelStyle: TextStyle(fontSize: 12.5.sp),
-        contentPadding: EdgeInsets.symmetric(vertical: 2.9.h, horizontal: 6.w),
+        contentPadding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 6.w),
         enabledBorder: enabledBorder,
         focusedBorder: focusedBorder,
         errorBorder: errorBorder,

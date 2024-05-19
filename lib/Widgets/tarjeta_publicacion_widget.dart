@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 
 class TarjetaPublicacionWidget extends StatelessWidget {
   final String nombreUsuario;
-  final DateTime fechaPublicacion;
+  final String fechaPublicacion;
   final String descripcion;
   final String imagen;
    
@@ -51,7 +51,7 @@ class TarjetaPublicacionWidget extends StatelessWidget {
                   ),
 
                   Text(
-                    "${fechaPublicacion.day} ${fechaPublicacion.month} ${fechaPublicacion.year}",
+                    fechaPublicacion,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: AppThemes.fechaTarjetaSize,

@@ -1,4 +1,3 @@
-import 'package:app_post_me/Models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
@@ -16,7 +15,7 @@ class CrearPublicacionWidget extends StatefulWidget {
 }
 
 class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
-  final _comentarioController = TextEditingController();
+  final _descripcionController = TextEditingController();
   final FocusNode _focusComentario = FocusNode();
   PublicacionesController publicacionesController = PublicacionesController();
 
@@ -33,9 +32,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
               fontSize: AppThemes.tituloSize, fontWeight: FontWeight.bold),
         ),
 
-        SizedBox(
-          height: 2.h,
-        ),
+        SizedBox(height: 2.h),
 
         //Campo para añadir la descripción de la publicación.
         TextFormField(
@@ -43,7 +40,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
             _focusComentario.unfocus();
           },
           cursorColor: Colors.black,
-          controller: _comentarioController,
+          controller: _descripcionController,
           focusNode: _focusComentario,
           keyboardType: TextInputType.multiline,
           maxLines: 5,
@@ -71,27 +68,12 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
 
         SizedBox(height: 2.h),
 
+        //El botón de la foto
         const BotonSeleccionarFoto(),
-
-        /* Center(
-            child: SizedBox(
-              width: 100.w,
-              child: Image.asset(
-                'assets/images/vaca.png',
-                alignment: Alignment.center,
-                fit: BoxFit.fitWidth, ),
-            ),
-          ), */
 
         SizedBox(height: 2.h),
 
         botonPublicar(publicacionProvider),
-
-        /* Image.memory(
-          "",
-          fit: BoxFit.fitWidth,
-
-        ) */
       ],
     );
   }
@@ -99,15 +81,26 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
   TextButton botonPublicar(PublicacionProvider publicacionProvider) {
     return TextButton(
         onPressed: () async {
-          Publicacion publicacion = Publicacion(foto: publicacionProvider.fotoBase64!, idUsuario: 0);
+          _ponerRuedaCargando();
 
-          dynamic resultado = await publicacionesController.crearPublicacion(publicacion: publicacion);
+          dynamic resultado = await publicacionesController.crearPublicacion(
+              foto: publicacionProvider.fotoBase64!,
+              idUsuario: 0,
+              descripcion: _descripcionController.text);
+
+          Navigator.of(context).pop(); //Quitamos rueda de carga
 
           if (resultado == true) {
+            //! Hace falta limpiar los campos después de hecha la publicación
             publicacionProvider.mostrarToast("¡Lo hicimos, Victor!");
+            //* Liampiamos campos después del éxito
+            _descripcionController.text = "";
+            publicacionProvider.fotoBase64 = "";
+            publicacionProvider.bytesFoto = null;
           } else {
-            publicacionProvider.mostrarToast("No servimos");
-          } 
+            publicacionProvider
+                .mostrarToast("Ha ocurrido un error, inténtelo de nuevo");
+          }
         },
         style: ButtonStyle(
             padding: MaterialStatePropertyAll(
@@ -118,11 +111,18 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
                 const MaterialStatePropertyAll(AppThemes.botonBackground)),
         child: Text(
           'Publicar',
-          //textAlign: TextAlign.start,
-          style: TextStyle(
-              fontSize: AppThemes.botonFontSize,
-              //fontWeight: FontWeight.bold,
-              color: Colors.black),
+          style:
+              TextStyle(fontSize: AppThemes.botonFontSize, color: Colors.black),
         ));
+  }
+
+  void _ponerRuedaCargando() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const RuedaCargaWidget();
+      },
+    );
   }
 }

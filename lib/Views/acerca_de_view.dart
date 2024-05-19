@@ -1,5 +1,6 @@
 import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class AcercaDeView extends StatelessWidget {
   const AcercaDeView({super.key});
@@ -16,6 +17,8 @@ class AcercaDeView extends StatelessWidget {
             style: TextStyle(
                 fontSize: AppThemes.tituloSize, fontWeight: FontWeight.bold),
           ),
+
+          SizedBox(height: 2.h),
 
           Text(
             'Fugiat aliquip sint proident dolor consectetur dolor est consequat'
