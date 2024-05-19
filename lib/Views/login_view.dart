@@ -2,10 +2,12 @@
 
 import 'dart:async';
 
+import 'package:app_post_me/Controllers/controllers.dart';
 import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 import '../Providers/providers.dart';
@@ -28,6 +30,8 @@ class _LoginViewState extends State<LoginView> {
     /* Timer(const Duration(milliseconds: 1), () {
       setState(() {});
     }); */
+
+    final PublicacionProvider publicacionProvider = Provider.of<PublicacionProvider>(context);
 
     OutlineInputBorder enabledBorder = OutlineInputBorder(
       borderSide: const BorderSide(color: Colors.black),
@@ -129,7 +133,7 @@ class _LoginViewState extends State<LoginView> {
                       focusedErrorBorder: focusedErrorBorder),
                     SizedBox(height: 3.h),
                     
-                    Center(child: _iniciarSesionBoton(/* registroProvider */)),
+                    Center(child: _iniciarSesionBoton(publicacionProvider)),
 
                     SizedBox(height: 3.h),
                         
@@ -167,7 +171,7 @@ class _LoginViewState extends State<LoginView> {
     );
   }
 
-  TextButton _iniciarSesionBoton(/* RegistroProvider registroProvider */) {
+  TextButton _iniciarSesionBoton(PublicacionProvider publicacionProvider) {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
@@ -180,32 +184,18 @@ class _LoginViewState extends State<LoginView> {
         if (userController.text.isNotEmpty &&
             passwordController.text.isNotEmpty) {
           _ponerRuedaCargando(); //Mostramos rueda de carga
-
-          Timer(const Duration(seconds: 2), () {});
-
+          
           //* Manejo del acceso a la cuenta consumiento la API
-          bool iniciaSesion = true;
-          /* dynamic iniciaSesion = await LoginController()
-              .iniciarSesion(
-                  email: userController.text, password: passwordController.text)
-              .then((value) async {
-            if (value == true) {
-              await HistorialChecksController()
-                  .mostrarRegistros(registroProvider);
-              Preferences.esSalida = _esSalida(registroProvider);
-              Preferences.fechaUltRegist =
-                  DateFormat("dd-MM-yyyy").format(DateTime.now());
-              registroProvider.cargandoRegistros = false;
-            }
-
-            return value;
-          }); */
+          dynamic iniciaSesion = await LoginController()
+            .iniciarSesion(
+              nombreCuenta: userController.text, 
+              password: passwordController.text);
           Navigator.of(context).pop(); //Quitamos rueda de carga
 
           if (iniciaSesion == true) {
             Navigator.pushReplacementNamed(context, 'navegacion_app');
           } else if (iniciaSesion == false) {
-            //RegistroProvider().mostrarToast('Revisa tu conexión a internet');
+            publicacionProvider.mostrarToast('Revisa tu conexión a internet');
           }
           setState(() {});
         } else {

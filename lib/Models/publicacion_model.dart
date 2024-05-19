@@ -4,7 +4,6 @@ class Publicacion {
   String foto;
   int idUsuario;
   String nombreUsuario;
-  String nombrePerfil;
   String fotoPerfil;
   String fecha;
 
@@ -13,7 +12,6 @@ class Publicacion {
       required this.idUsuario,
       required this.fotoPerfil,
       required this.nombreUsuario,
-      required this.nombrePerfil,
       required this.fecha,
       required this.foto,
       this.descripcion});
@@ -21,22 +19,19 @@ class Publicacion {
   factory Publicacion.fromJson(Map<String, dynamic> json) => Publicacion(
     idPublicacion: json["numPublicacion"],
     idUsuario: json["idUsuario"],
-    fotoPerfil: json["fotoPerfil"], //!Cambiar al de la base de datos
-    nombreUsuario: json["nombreUsuario"], //!Cambiar al de la base de datos
-    nombrePerfil: json["nombrePerfil"], //!Cambiar al de la base de datos
-    fecha: json["fecha"], //!Cambiar al de la base de datos
+    fotoPerfil: json["fotoPerfil"], 
+    nombreUsuario: json["nombreCuenta"],
+    fecha: json["fecha"], 
     foto: json["foto"],
     descripcion: json["descripcion"]
-
   );
 
   Map<String, dynamic> toJson() => {
-        "idPublicacion": idPublicacion,
+        "numPublicacion": idPublicacion,
         "foto": foto,
         "idUsuario": idUsuario,
         "descripcion": descripcion,
-        "nombrePerfil": nombrePerfil,
-        "nombreUsuario": nombreUsuario,
+        "nombreCuenta": nombreUsuario,
         "fotoPerfil": fotoPerfil,
         "fecha": fecha
       };
