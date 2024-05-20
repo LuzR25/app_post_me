@@ -72,7 +72,7 @@ class BotonSeleccionarFoto extends StatelessWidget {
           if (takenPhoto != null) {
             //Para pasar la foto a base64
             final bytes = await takenPhoto.readAsBytes();
-            String base64Image = "data:image/png;base64,${base64Encode(bytes)}";
+            String base64Image = base64Encode(bytes); //"data:image/png;base64,${base64Encode(bytes)}";
             publicacionProvider.insertTakenPhoto(base64Image, bytes);
           }
 

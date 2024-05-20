@@ -9,7 +9,7 @@ class AppThemes {
   static const Color botonBackground = Color.fromRGBO(209, 242, 242, 1);
   static const Color nombreDeUsuario = Color.fromRGBO(80, 186, 186, 1);
   static double botonFontSize = 16.sp;
-  static double paddingInicio = 1.5.h;
+  static double paddingInicio = 3.w;
   static double paddingAppGeneral = 3.h;
   static double tituloSize = 18.5.sp;
   static double textoSize = 14.sp;

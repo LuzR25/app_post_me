@@ -3,11 +3,13 @@ class Usuario {
   String nombreUsuario;
   String nombrePerfil;
   String fotoPerfil;
+  String password;
 
   Usuario({
     required this.idUsuario,
     required this.nombreUsuario,
     required this.nombrePerfil, 
+    required this.password,
     required this.fotoPerfil
   });
 
@@ -15,13 +17,15 @@ class Usuario {
     idUsuario: json["idUsuario"], 
     nombreUsuario: json["nombreCuenta"], 
     nombrePerfil: json["nombreUsuario"], 
-    fotoPerfil: json["fotoPerfil"]
+    fotoPerfil: json["fotoPerfil"],
+    password: json["contrasena"]
   );
 
   Map<String, dynamic> toJson() => {
     "idUsuario": idUsuario,
     "nombreCuenta": nombreUsuario,
     "nombreUsuario": nombrePerfil,
-    "fotoPerifl": fotoPerfil
+    "contrasena": password,
+    "fotoPerfil": fotoPerfil
   };
 }

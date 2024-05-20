@@ -74,11 +74,16 @@ class PublicacionesController {
   ///hasta entonces del usuario cuyo id se pase en los parámetros suponiendo
   ///que el query se realice con éxito; en el caso contrario regresará false.
   Future<dynamic> obtenerPublicacionesUsuario(int idUsuario) async {
-    final url = Uri.parse("$apiUsuarios/$idUsuario");
+    final Map<String, dynamic> requestBody = {
+      "idUsuario": idUsuario
+    };
+
+    String body = jsonEncode(requestBody);
+    final url = Uri.parse(apiPublicaciones);
     //int? statusCode;
 
     try {
-      final response = await http.get(url, headers: {'Content-Type': 'application/json'});
+      final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
 
       //statusCode = response.statusCode;
       //final jsonData = jsonDecode(response.body);

@@ -1,6 +1,12 @@
+import 'package:app_post_me/Providers/providers.dart';
 import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
+
+import '../Controllers/controllers.dart';
+import '../Widgets/widgets.dart';
 
 class RegistroView extends StatefulWidget {
   const RegistroView({super.key});
@@ -10,6 +16,7 @@ class RegistroView extends StatefulWidget {
 }
 
 class _RegistroViewState extends State<RegistroView> {
+  var fotoPerfil;
   var nombrePerfilController = TextEditingController();
   var nombreUsuarioController = TextEditingController();
   var passwordController = TextEditingController();
@@ -33,6 +40,8 @@ class _RegistroViewState extends State<RegistroView> {
       borderSide: const BorderSide(color: Color.fromARGB(255, 192, 36, 36)),
       borderRadius: BorderRadius.circular(10),
     );
+
+    PublicacionProvider publicacionProvider = Provider.of<PublicacionProvider>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -49,80 +58,96 @@ class _RegistroViewState extends State<RegistroView> {
         ),
         elevation: 0,
       ),
-      body: Padding(
-          padding: EdgeInsets.all(5.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //Foto de perfil
-                    CircleAvatar(
-                      backgroundImage:
-                          const AssetImage("assets/images/vaca.png"), //A ver si esto funciona
-                      radius: 8.h,
-                    ),
-          
-                    _botonSeleccionarFoto()
-                  ],
-                ),
-
-                SizedBox(height: 2.h),
-          
-                //Campo 'Nombre del perfil'
-                encabezadoTextField('Nombre del perfil'),
-                SizedBox(height: 1.h),
-                _nombrePerfilTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-          
-                SizedBox(height: 2.h),
-          
-                //Campo 'Nombre de usuario'
-                encabezadoTextField('Nombre de usuario'),
-                SizedBox(height: 1.h),
-          
-                SizedBox(
-                  child: _nombreUsuarioTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-                ),
-                
-          
-                SizedBox(height: 2.h),
-          
-                //Campo 'Contraseña'
-                encabezadoTextField('Contraseña'),
-                SizedBox(height: 1.h),
-                _passwordTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-          
-                SizedBox(height: 2.h),
-          
-                //Campo 'Confirmar contraseña'
-                encabezadoTextField('Confirmar contraseña'),
-                SizedBox(height: 2.h),
-                _repasswordTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-          
-                SizedBox(height: 4.5.h),
-          
-                Center(child: _botonRegistrar())
-              ],
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.all(5.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //Foto de perfil
+                      /* CircleAvatar(
+                        radius: 8.h,
+                        child: fotoPerfil == null 
+                        ? ClipOval(child: Image.asset("assets/images/vaca.png",  fit: BoxFit.cover,))
+                        
+                        : ClipOval(child: Image.memory(fotoPerfil, fit: BoxFit.cover,)) /* MemoryImage(
+                              fotoPerfi/* l,
+                              alignment: Alignment.center,
+                              fit: BoxFit.fitWidth, */
+                            ) */,
+        
+                      ), */
+        
+                      ClipOval(
+                        child: fotoPerfil == null 
+                        ? Image.asset("assets/images/vaca.png", width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                        
+                        : Image.memory(fotoPerfil, width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                      ),
+            
+                      _botonSeleccionarFoto(publicacionProvider)
+                    ],
+                  ),
+        
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Nombre del perfil'
+                  encabezadoTextField('Nombre del perfil'),
+                  SizedBox(height: 1.h),
+                  _nombrePerfilTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+            
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Nombre de usuario'
+                  encabezadoTextField('Nombre de usuario'),
+                  SizedBox(height: 1.h),
+            
+                  SizedBox(
+                    child: _nombreUsuarioTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+                  ),
+                  
+            
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Contraseña'
+                  encabezadoTextField('Contraseña'),
+                  SizedBox(height: 1.h),
+                  _passwordTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+            
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Confirmar contraseña'
+                  encabezadoTextField('Confirmar contraseña'),
+                  SizedBox(height: 2.h),
+                  _repasswordTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+            
+                  SizedBox(height: 4.5.h),
+            
+                  Center(child: _botonRegistrar(publicacionProvider))
+                ],
+              ),
+        ),
       ),
     );
   }
@@ -136,7 +161,7 @@ class _RegistroViewState extends State<RegistroView> {
     );
   }
 
-  TextButton _botonSeleccionarFoto() {
+  TextButton _botonSeleccionarFoto(PublicacionProvider publicacionProvider) {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
@@ -150,11 +175,26 @@ class _RegistroViewState extends State<RegistroView> {
         style: TextStyle(
             fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
-      onPressed: () {},
+      onPressed: () async {
+        ImagePicker? imagePicker = ImagePicker();
+          XFile? takenPhoto = await imagePicker.pickImage(
+              source: ImageSource.gallery,
+              imageQuality: 60
+            );
+
+          if (takenPhoto != null) {
+            //Para pasar la foto a base64
+            fotoPerfil = await takenPhoto.readAsBytes();
+            //String base64Image = "data:image/png;base64,${base64Encode(bytes)}";
+            //publicacionProvider.insertTakenPhoto(base64Image, bytes);
+          }
+
+          publicacionProvider.refrescarVista();
+      },
     );
   }
 
-  TextButton _botonRegistrar() {
+  TextButton _botonRegistrar(PublicacionProvider publicacionProvider) {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
@@ -168,7 +208,29 @@ class _RegistroViewState extends State<RegistroView> {
         style: TextStyle(
             fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
-      onPressed: () {},
+      onPressed: () async {
+        if (nombrePerfilController.text.isNotEmpty &&
+            nombreUsuarioController.text.isNotEmpty &&
+            repasswordController.text.isNotEmpty &&
+            passwordController.text.isNotEmpty &&
+            fotoPerfil != null) {
+          _ponerRuedaCargando(); //Mostramos rueda de carga
+          
+          //* Manejo del acceso a la cuenta consumiento la API
+          dynamic iniciaSesion = await UsuarioController();
+          Navigator.of(context).pop(); //Quitamos rueda de carga
+
+          if (iniciaSesion == true) {
+            Navigator.pushReplacementNamed(context, 'navegacion_app');
+          } else if (iniciaSesion == false) {
+            publicacionProvider.mostrarToast('Revisa tu conexión a internet');
+          }
+          setState(() {});
+        } else {
+          PublicacionProvider().mostrarToast(
+              'No puedes dejar ningún campo vacío y debes seleccionar una foto de perfil');
+        }
+      },
     );
   }
 
@@ -209,7 +271,7 @@ class _RegistroViewState extends State<RegistroView> {
       required OutlineInputBorder focusedErrorBorder}) {
     return TextFormField(
       textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
       controller: nombreUsuarioController,
       decoration: InputDecoration(
         labelText: 'Nombre de usuario',
@@ -239,7 +301,7 @@ class _RegistroViewState extends State<RegistroView> {
       required OutlineInputBorder focusedErrorBorder}) {
     return TextFormField(
       textInputAction: TextInputAction.next,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
       controller: passwordController,
       decoration: InputDecoration(
         labelText: 'Contraseña',
@@ -251,6 +313,7 @@ class _RegistroViewState extends State<RegistroView> {
         errorBorder: errorBorder,
         focusedErrorBorder: focusedErrorBorder,
       ),
+      obscureText: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (value != null && value.isEmpty) {
@@ -269,7 +332,7 @@ class _RegistroViewState extends State<RegistroView> {
       required OutlineInputBorder focusedErrorBorder}) {
     return TextFormField(
       textInputAction: TextInputAction.done,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
       controller: repasswordController,
       decoration: InputDecoration(
         labelText: 'Contraseña',
@@ -281,6 +344,7 @@ class _RegistroViewState extends State<RegistroView> {
         errorBorder: errorBorder,
         focusedErrorBorder: focusedErrorBorder,
       ),
+      obscureText: true,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (value != null && value.isEmpty) {
@@ -291,6 +355,16 @@ class _RegistroViewState extends State<RegistroView> {
         } else {
           return null;
         }
+      },
+    );
+  }
+
+  void _ponerRuedaCargando() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const RuedaCargaWidget();
       },
     );
   }

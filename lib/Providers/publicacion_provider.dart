@@ -11,9 +11,10 @@ class PublicacionProvider extends ChangeNotifier {
   
   String? fotoBase64;
   Uint8List? bytesFoto;
-  String nombreUsuario = "";
+  Usuario? usuario;
 
   List<Publicacion> listaPublicacionesInicio = [];
+  List<Publicacion> listaPublicacionesUsuario = [];
 
 
   ///Guarda la foto tomada por el usuario en base64.

@@ -118,7 +118,7 @@ class _PageItemState extends State<PageItem>
     } else if (widget.index == 1) {
       return const CrearPublicacionWidget();
     } else if (widget.index == 2) {
-      return const PerfilWidget();
+      return const PerfilWidget(soyUsuarioLogeado: true,);
     } else {
       return const ConfiguracionWidget();
     }

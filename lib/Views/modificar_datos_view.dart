@@ -1,10 +1,16 @@
+import 'package:app_post_me/Controllers/controllers.dart';
+import 'package:app_post_me/Providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../Models/models.dart';
 import '../Themes/app_themes.dart';
+import '../Widgets/widgets.dart';
 
 class ModificarDatosView extends StatefulWidget {
-  const ModificarDatosView({super.key});
+  //Usuario usuario;
+  const ModificarDatosView({/* required this.usuario, */ super.key});
 
   @override
   State<ModificarDatosView> createState() => _ModificarDatosViewState();
@@ -14,7 +20,6 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
   var nombrePerfilController = TextEditingController();
   var nombreUsuarioController = TextEditingController();
   var passwordController = TextEditingController();
-  var repasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +39,12 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
       borderSide: const BorderSide(color: Color.fromARGB(255, 192, 36, 36)),
       borderRadius: BorderRadius.circular(10),
     );
+
+    final PublicacionProvider publicacionProvider = Provider.of<PublicacionProvider>(context);
+
+    nombrePerfilController.text = publicacionProvider.usuario!.nombrePerfil;
+    nombreUsuarioController.text = publicacionProvider.usuario!.nombreUsuario;
+    passwordController.text = publicacionProvider.usuario!.password;
 
     return Scaffold(
       appBar: AppBar(
@@ -110,7 +121,7 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
           
                 SizedBox(height: 4.5.h),
           
-                Center(child: _botonModificar())
+                Center(child: _botonModificar(publicacionProvider))
               ],
             ),
       ),
@@ -144,7 +155,7 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
     );
   }
 
-  TextButton _botonModificar() {
+  TextButton _botonModificar(PublicacionProvider publicacionProvider) {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
@@ -158,7 +169,35 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
         style: TextStyle(
             fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
-      onPressed: () {},
+      onPressed: () async {
+        if (nombrePerfilController.text.isNotEmpty &&
+            passwordController.text.isNotEmpty &&
+            nombreUsuarioController.text.isNotEmpty) {
+          _ponerRuedaCargando(); //Mostramos rueda de carga
+
+          Usuario usuario = Usuario(idUsuario: publicacionProvider.usuario!.idUsuario, nombreUsuario: nombreUsuarioController.text, nombrePerfil: nombrePerfilController.text, fotoPerfil: publicacionProvider.fotoBase64!, password: passwordController.text);
+          
+          dynamic iniciaSesion = true;
+          
+          //* Manejo del acceso a la cuenta consumiento la API
+          /* dynamic iniciaSesion = await UsuarioController()
+            .actualizarDatos(
+              nombreCuenta: userController.text, 
+              password: passwordController.text,
+              publicacionProvider: publicacionProvider);
+          Navigator.of(context).pop(); //Quitamos rueda de carga */
+
+          if (iniciaSesion == true) {
+            //Navigator.pushReplacementNamed(context, 'navegacion_app');
+            publicacionProvider.mostrarToast('¡Datos modificados con éxito!');
+          } else if (iniciaSesion == false) {
+            publicacionProvider.mostrarToast('Revisa tu conexión a internet');
+          }
+          setState(() {});
+        } else {
+          publicacionProvider.mostrarToast('No puedes dejar ningún campo vacío');
+        }
+      },
     );
   }
 
@@ -248,6 +287,16 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
         } else {
           return null;
         }
+      },
+    );
+  }
+
+  void _ponerRuedaCargando() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const RuedaCargaWidget();
       },
     );
   }

@@ -10,7 +10,7 @@ class UsuarioDatabaseController {
         onCreate: (db, version) {
       return db.execute(
           "CREATE TABLE Usuario (idUsuario INTEGER PRIMARY KEY, nombreCuenta TEXT, "
-          "nombreUsuario TEXT, fotoPerfil TEXT)");
+          "nombreUsuario TEXT, contrasena TEXT, fotoPerfil TEXT)");
     }, version: 1);
   }
 
@@ -29,7 +29,8 @@ class UsuarioDatabaseController {
       idUsuario: usuarioDatos[0]['idUsuario'], 
       nombreUsuario: usuarioDatos[0]['nombreCuenta'], 
       nombrePerfil: usuarioDatos[0]['nombreUsuario'], 
-      fotoPerfil: usuarioDatos[0]['fotoPerfil']
+      fotoPerfil: usuarioDatos[0]['fotoPerfil'],
+      password: usuarioDatos[0]['password']
     );
   }
 

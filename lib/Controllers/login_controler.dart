@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_post_me/Controllers/controllers.dart';
+import 'package:app_post_me/Providers/publicacion_provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../Links/links.dart';
@@ -14,7 +15,7 @@ class LoginController {
   ///Se conecta con la API de login y manda los datos de inicio de sesión del
   ///usuario para saber si son correctos y darle acceso a la aplicación.
   Future<dynamic> iniciarSesion(
-      {required String nombreCuenta, required String password}) async {
+      {required String nombreCuenta, required String password, required PublicacionProvider publicacionProvider}) async {
     final Map<String, dynamic> requestBody = {
       'nombreCuenta': nombreCuenta,
       'contrasena': password,
@@ -43,6 +44,11 @@ class LoginController {
         for (var publicacion in listaPublicaciones) {
           PublicacionesDatabaseController.insertarPublicacion(publicacion);
         }
+
+        //Guardo al usuario y sus publicaciones en el provider para tener acceso
+        //a su información durante su navegación en la aplicación
+        publicacionProvider.usuario = usuario;
+        publicacionProvider.listaPublicacionesUsuario = listaPublicaciones;
 
         return true;
       } else {

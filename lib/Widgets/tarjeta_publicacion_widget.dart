@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -7,20 +9,33 @@ class TarjetaPublicacionWidget extends StatelessWidget {
   final String fechaPublicacion;
   final String descripcion;
   final String imagen;
+  final String fotoPerfil;
    
   const TarjetaPublicacionWidget({
     required this.nombreUsuario,
     required this.fechaPublicacion,
     required this.descripcion,
     required this.imagen,
+    required this.fotoPerfil,
     super.key
   });
   
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
-      padding: EdgeInsets.all(2.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: List.generate(4, (index) => BoxShadow(
+          color: const Color.fromARGB(255, 221, 221, 221),
+          blurRadius: 1.w,
+          blurStyle: BlurStyle.outer
+        ))
+        //border: 
+      ),
+      
+      padding: EdgeInsets.all(AppThemes.paddingInicio),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -29,12 +44,17 @@ class TarjetaPublicacionWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               //Foto de perfil
-              CircleAvatar(
-                backgroundImage: const AssetImage("assets/images/vaca.png"), //!Corregir luego para que realmente aparezca una imagen
-                radius: 5.h,
+              TextButton(
+                style: const ButtonStyle(
+                  padding: MaterialStatePropertyAll(EdgeInsets.zero)
+                ),
+                onPressed: () {}, 
+                child: ClipOval(
+                        child: Image.memory(base64Decode(fotoPerfil), width: 8.h, height: 8.h,  fit: BoxFit.cover,)
+                      ),
               ),
 
-              SizedBox(width: 4.w),
+              SizedBox(width: 3.w),
 
               //Nombre de usuario y fecha
               Column(
@@ -44,7 +64,7 @@ class TarjetaPublicacionWidget extends StatelessWidget {
                   Text(
                     nombreUsuario,
                     style: TextStyle(
-                      color: Colors.black,
+                      color: AppThemes.bottomNavigationBar,
                       fontSize: AppThemes.textoSize,
                       fontWeight: FontWeight.bold
                     ),
@@ -81,8 +101,8 @@ class TarjetaPublicacionWidget extends StatelessWidget {
           Center(
             child: SizedBox(
               width: 100.w,
-              child: Image.asset(
-                imagen,
+              child: Image.memory(
+                base64Decode(imagen),
                 alignment: Alignment.center,
                 fit: BoxFit.fitWidth, ),
             ),

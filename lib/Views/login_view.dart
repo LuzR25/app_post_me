@@ -1,12 +1,6 @@
-//import 'dart:async';
-
-import 'dart:async';
-
 import 'package:app_post_me/Controllers/controllers.dart';
 import 'package:app_post_me/Themes/app_themes.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -189,7 +183,8 @@ class _LoginViewState extends State<LoginView> {
           dynamic iniciaSesion = await LoginController()
             .iniciarSesion(
               nombreCuenta: userController.text, 
-              password: passwordController.text);
+              password: passwordController.text,
+              publicacionProvider: publicacionProvider);
           Navigator.of(context).pop(); //Quitamos rueda de carga
 
           if (iniciaSesion == true) {

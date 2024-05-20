@@ -1,13 +1,20 @@
-import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../Controllers/controllers.dart';
+import '../Preferences/preferences.dart';
+import '../Providers/providers.dart';
+import '../Themes/app_themes.dart';
 
 class ConfiguracionWidget extends StatelessWidget {
   const ConfiguracionWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final PublicacionProvider publicacionProvider = Provider.of<PublicacionProvider>(context);
+
     ButtonStyle estilo = ButtonStyle(
         padding: MaterialStatePropertyAll(
             EdgeInsets.symmetric(vertical: 1.h, horizontal: 4.w)),
@@ -27,20 +34,29 @@ class ConfiguracionWidget extends StatelessWidget {
                 fontSize: AppThemes.tituloSize, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 2.h,),
-          botonModificarCuenta(estilo),
+          botonModificarCuenta(estilo, context),
           botonGitHub(estilo),
           botonAcercaDe(estilo),
-          botonCerrarSesion(estilo),
+          botonCerrarSesion(estilo, publicacionProvider, context),
         ],
       ),
     );
   }
 
-  Flex botonCerrarSesion(ButtonStyle estilo) {
+  Flex botonCerrarSesion(ButtonStyle estilo, PublicacionProvider publicacionProvider, BuildContext context) {
     return Flex(direction: Axis.horizontal, children: [
       Expanded(
         child: TextButton(
-            onPressed: () {},
+            onPressed: () async {
+              publicacionProvider.listaPublicacionesInicio = [];
+              publicacionProvider.listaPublicacionesUsuario = [];
+              publicacionProvider.usuario = null;
+              await UsuarioDatabaseController.delete();
+              await PublicacionesDatabaseController.eliminarPublicaciones();
+              await Preferences.limpiarPreferencias();
+
+              Navigator.pushReplacementNamed(context, 'login');
+            },
             style: estilo,
             child: Text(
               'Cerrar sesión',
@@ -90,13 +106,15 @@ class ConfiguracionWidget extends StatelessWidget {
     ]);
   }
 
-  Flex botonModificarCuenta(ButtonStyle estilo) {
+  Flex botonModificarCuenta(ButtonStyle estilo, BuildContext context) {
     return Flex(
       direction: Axis.horizontal,
       children: [
         Expanded(
             child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, 'modificar_datos');
+                },
                 style: estilo,
                 child: Text(
                   'Modificar datos de cuenta',

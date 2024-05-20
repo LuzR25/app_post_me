@@ -31,7 +31,7 @@ class PublicacionesDatabaseController {
     Database database = await PublicacionesDatabaseController.db();
 
     final List<Map<String, dynamic>> mapPublicaciones =
-        await database.query("Publicaciones");
+        await database.query("Publicacion");
 
     List<Publicacion> listaPublicaciones = [];
     for (var element in mapPublicaciones) {
@@ -43,6 +43,6 @@ class PublicacionesDatabaseController {
 
   static Future<void> eliminarPublicaciones() async {
     Database database = await PublicacionesDatabaseController.db();
-    await database.delete('Evidencias');
+    await database.delete('Publicacion');
   }
 }
