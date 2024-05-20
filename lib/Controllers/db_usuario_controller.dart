@@ -37,7 +37,7 @@ class UsuarioDatabaseController {
   static Future<void> actualizarUsuario(Usuario usuario) async {
     Database database = await _openDB();
     await database.update('Usuario', usuario.toJson(),
-        where: 'id = ?', whereArgs: [usuario.idUsuario]);
+        where: 'idUsuario = ?', whereArgs: [usuario.idUsuario]);
   }
 
   static Future<void> delete() async {

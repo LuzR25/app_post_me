@@ -13,6 +13,7 @@ class AppRoutes {
     RouteModel(route: 'acerca_de', name: 'Acerca_de', screen: const AcercaDeView()),
     RouteModel(route: 'modificar_datos', name: 'Modificar_datos', screen: const ModificarDatosView()),
     RouteModel(route: 'navegacion_app', name: 'Navegacion_app', screen: const NavegacionAppView()),
+    //RouteModel(route: 'perfil', name: 'Perfil', screen: PerfilView()),
     RouteModel(route: 'registro', name: 'Registro', screen: const RegistroView())
   ];
 

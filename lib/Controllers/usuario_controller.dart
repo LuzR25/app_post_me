@@ -30,9 +30,16 @@ class UsuarioController {
         //Guardo datos de inicio de sesión
         UsuarioDatabaseController.actualizarUsuario(usuario);
 
-        //Guardo al usuario y sus publicaciones en el provider para tener acceso
-        //a su información durante su navegación en la aplicación
+        //Actualizo usuario en PublicacionProvider
         publicacionProvider.usuario = usuario;
+
+        for (var publicacion in publicacionProvider.listaPublicacionesUsuario) {
+          publicacion.fotoPerfil = usuario.fotoPerfil;
+          publicacion.nombreUsuario = usuario.nombreUsuario;
+
+          PublicacionesDatabaseController.actualizarPublicacion(publicacion);
+        }
+        
 
         return true;
       } else {
@@ -44,29 +51,21 @@ class UsuarioController {
     }
   }
 
-  ///Se conecta con la API de login y manda los datos de inicio de sesión del
-  ///usuario para saber si son correctos y darle acceso a la aplicación.
-  Future<dynamic> iniciarSesion(
-      {required String nombreCuenta, required String password, required fotoPerfil}) async {
-    final Map<String, dynamic> requestBody = {
-      'nombreCuenta': nombreCuenta,
-      'contrasena': password,
-    };
-
-    String body = jsonEncode(requestBody);
-    final url = Uri.parse(apiLogin);
+  Future<dynamic> obtenerDatosUsuario(int idUsuario) async {
+    final url = Uri.parse("$apiUsuarios/$idUsuario");
     int? statusCode;
 
     try {
-      final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+      final response = await http.get(url, headers: {'Content-Type': 'application/json'});
 
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        return true;
+        return Usuario.fromJson(jsonData);
       } else {
         PublicacionProvider().mostrarToast(jsonData['error']);
+        return false;
       }
     } catch (e) {
       print('Error en $e');

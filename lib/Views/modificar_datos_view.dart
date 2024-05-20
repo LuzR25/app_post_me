@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:app_post_me/Controllers/controllers.dart';
 import 'package:app_post_me/Providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -45,6 +48,7 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
     nombrePerfilController.text = publicacionProvider.usuario!.nombrePerfil;
     nombreUsuarioController.text = publicacionProvider.usuario!.nombreUsuario;
     passwordController.text = publicacionProvider.usuario!.password;
+    //fotoPerfil = publicacionProvider.usuario!.fotoPerfil;
 
     return Scaffold(
       appBar: AppBar(
@@ -72,13 +76,14 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     //Foto de perfil
-                    CircleAvatar(
-                      backgroundImage:
-                          const AssetImage("assets/images/vaca.png"), //A ver si esto funciona
-                      radius: 8.h,
-                    ),
+                    ClipOval(
+                        child: publicacionProvider.fotoCambiar == null 
+                        ? Image.memory(base64Decode(publicacionProvider.usuario!.fotoPerfil), width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                        
+                        : Image.memory(publicacionProvider.fotoCambiar!, width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                      ),
           
-                    _botonSeleccionarFoto()
+                    _botonSeleccionarFoto(publicacionProvider)
                   ],
                 ),
 
@@ -137,7 +142,7 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
     );
   }
 
-  TextButton _botonSeleccionarFoto() {
+  TextButton _botonSeleccionarFoto(PublicacionProvider publicacionProvider) {
     return TextButton(
       style: ButtonStyle(
           padding: MaterialStatePropertyAll(
@@ -151,7 +156,22 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
         style: TextStyle(
             fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
-      onPressed: () {},
+      onPressed: () async {
+        ImagePicker? imagePicker = ImagePicker();
+          XFile? takenPhoto = await imagePicker.pickImage(
+              source: ImageSource.gallery,
+              imageQuality: 60
+            );
+
+          if (takenPhoto != null) {
+            //Para pasar la foto a base64
+            publicacionProvider.fotoCambiar = await takenPhoto.readAsBytes();
+            //String base64Image = "data:image/png;base64,${base64Encode(bytes)}";
+            //publicacionProvider.insertTakenPhoto(base64Image, bytes);
+          }
+
+          publicacionProvider.refrescarVista();
+      },
     );
   }
 
@@ -165,7 +185,7 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
           backgroundColor:
               const MaterialStatePropertyAll(AppThemes.botonBackground)),
       child: Text(
-        'Registrar',
+        'Guardar cambios',
         style: TextStyle(
             fontSize: AppThemes.botonFontSize, fontWeight: FontWeight.bold, color: Colors.black),
       ),
@@ -175,17 +195,15 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
             nombreUsuarioController.text.isNotEmpty) {
           _ponerRuedaCargando(); //Mostramos rueda de carga
 
-          Usuario usuario = Usuario(idUsuario: publicacionProvider.usuario!.idUsuario, nombreUsuario: nombreUsuarioController.text, nombrePerfil: nombrePerfilController.text, fotoPerfil: publicacionProvider.fotoBase64!, password: passwordController.text);
+          Usuario usuario = Usuario(idUsuario: publicacionProvider.usuario!.idUsuario, nombreUsuario: nombreUsuarioController.text, nombrePerfil: nombrePerfilController.text, fotoPerfil: base64Encode(publicacionProvider.fotoCambiar!), password: passwordController.text);
           
-          dynamic iniciaSesion = true;
+          //dynamic iniciaSesion = true;
           
           //* Manejo del acceso a la cuenta consumiento la API
-          /* dynamic iniciaSesion = await UsuarioController()
-            .actualizarDatos(
-              nombreCuenta: userController.text, 
-              password: passwordController.text,
-              publicacionProvider: publicacionProvider);
-          Navigator.of(context).pop(); //Quitamos rueda de carga */
+          dynamic iniciaSesion = await UsuarioController().actualizarDatos(
+            usuario: usuario, 
+            publicacionProvider: publicacionProvider);
+          Navigator.of(context).pop(); //Quitamos rueda de carga
 
           if (iniciaSesion == true) {
             //Navigator.pushReplacementNamed(context, 'navegacion_app');

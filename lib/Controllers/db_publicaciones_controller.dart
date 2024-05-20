@@ -41,6 +41,13 @@ class PublicacionesDatabaseController {
     return listaPublicaciones;
   }
 
+  static Future<void> actualizarPublicacion(Publicacion publicacion) async {
+    Database database = await PublicacionesDatabaseController.db();
+
+    await database.update('Publicacion', publicacion.toJson(),
+        where: 'numPublicacion = ?', whereArgs: [publicacion.idPublicacion]);
+  }
+
   static Future<void> eliminarPublicaciones() async {
     Database database = await PublicacionesDatabaseController.db();
     await database.delete('Publicacion');

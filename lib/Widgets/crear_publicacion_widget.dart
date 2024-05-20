@@ -83,10 +83,15 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
         onPressed: () async {
           _ponerRuedaCargando();
 
+          print("Aquí 5");
+
           dynamic resultado = await publicacionesController.crearPublicacion(
               foto: publicacionProvider.fotoBase64!,
               idUsuario: 0,
-              descripcion: _descripcionController.text);
+              descripcion: _descripcionController.text,
+              publicacionProvider: publicacionProvider);
+
+          print("Aquí 6");
 
           Navigator.of(context).pop(); //Quitamos rueda de carga
 
@@ -95,7 +100,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
             publicacionProvider.mostrarToast("¡Lo hicimos, Victor!");
             //* Liampiamos campos después del éxito
             _descripcionController.text = "";
-            publicacionProvider.fotoBase64 = "";
+            publicacionProvider.fotoBase64 = null;
             publicacionProvider.bytesFoto = null;
           } else {
             publicacionProvider

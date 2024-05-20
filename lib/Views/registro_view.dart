@@ -85,7 +85,7 @@ class _RegistroViewState extends State<RegistroView> {
         
                       ClipOval(
                         child: fotoPerfil == null 
-                        ? Image.asset("assets/images/vaca.png", width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                        ? Image.asset("assets/images/fondo_foto.png", width: 16.h, height: 16.h,  fit: BoxFit.cover,)
                         
                         : Image.memory(fotoPerfil, width: 16.h, height: 16.h,  fit: BoxFit.cover,)
                       ),

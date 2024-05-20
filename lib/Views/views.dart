@@ -1,3 +1,4 @@
+export 'package:app_post_me/Views/perfil_view.dart';
 export 'package:app_post_me/Views/acerca_de_view.dart';
 export 'package:app_post_me/Views/login_view.dart';
 export 'package:app_post_me/Views/modificar_datos_view.dart';

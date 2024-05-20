@@ -11,6 +11,7 @@ class PublicacionProvider extends ChangeNotifier {
   
   String? fotoBase64;
   Uint8List? bytesFoto;
+  Uint8List? fotoCambiar;
   Usuario? usuario;
 
   List<Publicacion> listaPublicacionesInicio = [];

@@ -7,7 +7,22 @@ class AcercaDeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 15.w,
+        centerTitle: true,
+        titleSpacing: 0,
+        //backgroundColor: AppThemes.headerBackground,
+        title: Text(
+          'Post Me!',
+          style: TextStyle(
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white),
+        ),
+        elevation: 0,
+      ),
+      body: Padding(
       padding: EdgeInsets.all(AppThemes.paddingAppGeneral),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -21,18 +36,19 @@ class AcercaDeView extends StatelessWidget {
           SizedBox(height: 2.h),
 
           Text(
-            'Fugiat aliquip sint proident dolor consectetur dolor est consequat'
-            ' elit qui commodo duis. Et dolore cillum ex do labore. Velit dolore'
-            ' velit adipisicing deserunt consequat id in non ea pariatur non id.'
-            ' Elit aliqua quis ea proident pariatur magna nostrud laboris commodo'
-            ' enim sunt. Eu aute excepteur consequat fugiat ipsum tempor ea et '
-            'labore sint. Nostrud occaecat deserunt est dolore sint fugiat est '
-            'pariatur sint ipsum cupidatat enim.',
+            'Post Me! es una red social que ha sido presentada como el proyecto final de'
+            ' la asignatura Sistemas Distribuidos y creada por Angel David Ricalde'
+            ' Ché y Luz Rocío García Peña del octavo semestre de la Licenciatura'
+            ' en Ingeniería de Software.\n\n'
+            'En Post Me! puedes publicar una imagen con una descripción, crearte'
+            ' una cuenta, ver las cuentas de otros usuarios y sus publicaciones, y'
+            ' editar la información de tu propia cuenta.',
             style: TextStyle(
                 fontSize: AppThemes.textoSize),
           ),
         ],
       ),
-    );
+    ),
+   );
   }
 }

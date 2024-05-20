@@ -4,35 +4,54 @@ import 'package:http/http.dart' as http;
 
 import '../Links/links.dart';
 import '../Models/models.dart';
+import '../Providers/providers.dart';
 
 class PublicacionesController {
   ///Se conecta con la API de publicaciones del servidor local y crea una publicación.
   Future<dynamic> crearPublicacion(
       {required String foto,
       required int idUsuario,
-      required String descripcion}) async {
-    
+      required String descripcion,
+      required PublicacionProvider publicacionProvider}) async {
+    print("Aquí 8");
     final Map<String, dynamic> requestBody = {
       "foto": foto,
       "idUsuario": idUsuario,
-      "descripcion": descripcion
+      "descripcion": descripcion,
+      "nombreCuenta": publicacionProvider.usuario!.nombreUsuario,
+      "fotoPerfil": publicacionProvider.usuario!.fotoPerfil
     };
 
+    print("Aquí 9");
+
     String body = jsonEncode(requestBody);
-    final url = Uri.parse(apiPublicaciones);
+    print("Aquí 205");
+    final url = Uri.parse(apiPublicacionesCrear);
+    print("Aquí 206");
     int? statusCode;
 
     try {
+      print("Aquí 201");
       final response = await http
           .post(url, body: body, headers: {'Content-Type': 'application/json'});
-
+      print("Aquí 202");
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
+      print("Aquí 203");
 
       if (response.statusCode == 200) {
+        print("Aquí 200");
+        print("jsonData: $jsonData");
         Publicacion publicacion = Publicacion.fromJson(jsonData);
+
+        print("Aquí 1");
         
         PublicacionesDatabaseController.insertarPublicacion(publicacion);
+
+        print("Aquí 2");
+        publicacionProvider.listaPublicacionesUsuario = await PublicacionesDatabaseController.obtenerPublicaciones();
+
+        print("Aquí 3");
 
         //Guardo datos de inicio de sesión
         /* await DatabaseUsuarioController.insertarUsuario(usuario);
@@ -50,7 +69,7 @@ class PublicacionesController {
   }
 
   Future<List<Publicacion>> obtenerPublicacionesTodas() async {
-    final url = Uri.parse(apiPublicaciones);
+    final url = Uri.parse(apiPublicacionesObtener);
     //int? statusCode;
 
     try {
@@ -79,7 +98,7 @@ class PublicacionesController {
     };
 
     String body = jsonEncode(requestBody);
-    final url = Uri.parse(apiPublicaciones);
+    final url = Uri.parse(apiPublicacionesUsuario);
     //int? statusCode;
 
     try {

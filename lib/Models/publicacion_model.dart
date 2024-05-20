@@ -21,7 +21,7 @@ class Publicacion {
     idUsuario: json["idUsuario"],
     fotoPerfil: json["fotoPerfil"], 
     nombreUsuario: json["nombreCuenta"],
-    fecha: json["fecha"], 
+    fecha: json["fecha"] /* "2024-05-20" */, 
     foto: json["foto"],
     descripcion: json["descripcion"]
   );
@@ -35,9 +35,4 @@ class Publicacion {
         "fotoPerfil": fotoPerfil,
         "fecha": fecha
       };
-
-  @override
-  String toString() {
-    return 'idPublicacion: $idPublicacion, idUsuario: $idUsuario, descripcion: $descripcion, foto: $foto';
-  }
 }

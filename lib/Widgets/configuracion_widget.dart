@@ -36,7 +36,7 @@ class ConfiguracionWidget extends StatelessWidget {
           SizedBox(height: 2.h,),
           botonModificarCuenta(estilo, context),
           botonGitHub(estilo),
-          botonAcercaDe(estilo),
+          botonAcercaDe(estilo, context),
           botonCerrarSesion(estilo, publicacionProvider, context),
         ],
       ),
@@ -48,6 +48,8 @@ class ConfiguracionWidget extends StatelessWidget {
       Expanded(
         child: TextButton(
             onPressed: () async {
+              publicacionProvider.fotoBase64 = null;
+              publicacionProvider.bytesFoto = null;
               publicacionProvider.listaPublicacionesInicio = [];
               publicacionProvider.listaPublicacionesUsuario = [];
               publicacionProvider.usuario = null;
@@ -71,11 +73,13 @@ class ConfiguracionWidget extends StatelessWidget {
     ]);
   }
 
-  Flex botonAcercaDe(ButtonStyle estilo) {
+  Flex botonAcercaDe(ButtonStyle estilo, BuildContext context) {
     return Flex(direction: Axis.horizontal, children: [
       Expanded(
         child: TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, 'acerca_de');
+            },
             style: estilo,
             child: Text(
               'Acerca de',

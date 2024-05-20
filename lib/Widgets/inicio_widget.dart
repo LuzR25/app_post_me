@@ -30,6 +30,7 @@ class _InicioWidgetState extends State<InicioWidget> {
             padding: EdgeInsets.all(AppThemes.paddingInicio),
             itemCount: publicaciones.length,
             itemBuilder: (context, index) => TarjetaPublicacionWidget(
+              idUsuario: publicaciones[index].idUsuario,
               nombreUsuario: publicaciones[index].nombreUsuario,
               fechaPublicacion: publicaciones[index].fecha,
               descripcion: publicaciones[index].descripcion!, // == "" ? "" : publicaciones[index].descripcion!,

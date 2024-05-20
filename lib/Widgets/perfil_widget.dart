@@ -28,55 +28,70 @@ class _PerfilWidgetState extends State<PerfilWidget> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return SingleChildScrollView(
-              child: Column(children: [
-                Row(
+        padding: EdgeInsets.all(AppThemes.paddingInicio),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+          Row(
+            children: [
+              ClipOval(
+                child: Image.memory(
+                  base64Decode(publicacionProvider.usuario!.fotoPerfil), 
+                  width: 16.h, 
+                  height: 16.h,  
+                  fit: BoxFit.cover,)
+              ),
+
+              SizedBox(width: 12.w),
+
+              Center(
+                child: Column(
                   children: [
-                    ClipOval(
-                        child: Image.memory(base64Decode(publicacionProvider.usuario!.fotoPerfil), width: 16.h, height: 16.h,  fit: BoxFit.cover,)
-                      ),
-                    Center(
-                        child: Column(children: [
-                          Text("${publicacionProvider.listaPublicacionesUsuario.length}"),
-                          Text(
-                            "publicaciones",
-                            style: TextStyle(color: Colors.black, fontSize: 16.sp),
-                          )
-                        ]),
-                      )
-                  ],
+                    Text("${publicacionProvider.listaPublicacionesUsuario.length}",
+                    style: TextStyle(color: Colors.black, fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                    Text(
+                      "publicaciones",
+                      style: TextStyle(color: Colors.black, fontSize: 16.sp),
+                    )
+                  ]
                 ),
-                SizedBox(height: 2.h),
-                Text(
-                  publicacionProvider.usuario!.nombrePerfil,
-                  style: TextStyle(
-                      fontSize: AppThemes.textoSize, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  publicacionProvider.usuario!.nombreUsuario,
-                  style: TextStyle(fontSize: AppThemes.textoSize),
-                ),
-                SizedBox(height: 2.h),
-                Text(
-                  widget.soyUsuarioLogeado ? "Mis publicaciones" : "Publicaciones",
-                  style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 1.h),
-                ListView.separated(
-                  separatorBuilder: (context, index) => const Divider(
-                    color: Colors.transparent,
-                  ),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: publicacionProvider.listaPublicacionesUsuario.length,
-                  itemBuilder: (context, index) => TarjetaPublicacionWidget(
-                      nombreUsuario: publicacionProvider.listaPublicacionesUsuario[index].nombreUsuario,
-                      fechaPublicacion: publicacionProvider.listaPublicacionesUsuario[index].fecha,
-                      descripcion: publicacionProvider.listaPublicacionesUsuario[index]
-                          .descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
-                      fotoPerfil: publicacionProvider.listaPublicacionesUsuario[index].fotoPerfil,
-                      imagen: publicacionProvider.listaPublicacionesUsuario[index].foto))
-              ]),
-            );
+              )
+            ],
+          ),
+          SizedBox(height: 2.h),
+          Text(
+            publicacionProvider.usuario!.nombrePerfil,
+            style: TextStyle(
+                fontSize: 16.sp, fontWeight: FontWeight.bold),
+          ),
+          Text(
+            publicacionProvider.usuario!.nombreUsuario,
+            style: TextStyle(fontSize: 16.sp),
+          ),
+          SizedBox(height: 2.h),
+          Text(
+            widget.soyUsuarioLogeado ? "Mis publicaciones" : "Publicaciones",
+            style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 1.h),
+          ListView.separated(
+            separatorBuilder: (context, index) => const Divider(
+              color: Colors.transparent,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: publicacionProvider.listaPublicacionesUsuario.length,
+            itemBuilder: (context, index) => TarjetaPublicacionWidget(
+              idUsuario: publicacionProvider.listaPublicacionesUsuario[index].idUsuario,
+                nombreUsuario: publicacionProvider.listaPublicacionesUsuario[index].nombreUsuario,
+                fechaPublicacion: publicacionProvider.listaPublicacionesUsuario[index].fecha,
+                descripcion: publicacionProvider.listaPublicacionesUsuario[index]
+                    .descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
+                fotoPerfil: publicacionProvider.listaPublicacionesUsuario[index].fotoPerfil,
+                imagen: publicacionProvider.listaPublicacionesUsuario[index].foto))
+        ]),
+      );
           } else {
             return Center(
               child: SizedBox(
@@ -148,6 +163,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
             shrinkWrap: true,
             itemCount: publicacionProvider.listaPublicacionesUsuario.length,
             itemBuilder: (context, index) => TarjetaPublicacionWidget(
+              idUsuario: publicacionProvider.listaPublicacionesUsuario[index].idUsuario,
                 nombreUsuario: publicacionProvider.listaPublicacionesUsuario[index].nombreUsuario,
                 fechaPublicacion: publicacionProvider.listaPublicacionesUsuario[index].fecha,
                 descripcion: publicacionProvider.listaPublicacionesUsuario[index]
@@ -167,30 +183,5 @@ class _PerfilWidgetState extends State<PerfilWidget> {
     publicacionProvider.listaPublicacionesUsuario = await PublicacionesDatabaseController.obtenerPublicaciones();
 
     return true;
-
-    /* setState(() {
-      publicacionProvider.usuario = usuario;
-    }); */
   }
-
-  /* Text _mostrarNombreUsuario(RegistroProvider registroProvider) {
-    if (registroProvider.nombreUsuario == '') {
-      _obtenerNombreU(registroProvider);
-    }
-
-    return Text(registroProvider.nombreUsuario,
-      textAlign: TextAlign.center,
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp)
-    );
-  }
-
-  void _obtenerNombreU(RegistroProvider registroProvider) async {
-    Usuario usuarioLog;
-
-    usuarioLog = await DatabaseController.obtainData();
-
-    setState(() {
-      registroProvider.nombreUsuario = usuarioLog.usuario;
-    });
-  } */
 }

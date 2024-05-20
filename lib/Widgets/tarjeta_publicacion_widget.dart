@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app_post_me/Themes/app_themes.dart';
+import 'package:app_post_me/Views/views.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -10,6 +11,7 @@ class TarjetaPublicacionWidget extends StatelessWidget {
   final String descripcion;
   final String imagen;
   final String fotoPerfil;
+  final int idUsuario;
    
   const TarjetaPublicacionWidget({
     required this.nombreUsuario,
@@ -17,6 +19,7 @@ class TarjetaPublicacionWidget extends StatelessWidget {
     required this.descripcion,
     required this.imagen,
     required this.fotoPerfil,
+    required this.idUsuario,
     super.key
   });
   
@@ -48,7 +51,9 @@ class TarjetaPublicacionWidget extends StatelessWidget {
                 style: const ButtonStyle(
                   padding: MaterialStatePropertyAll(EdgeInsets.zero)
                 ),
-                onPressed: () {}, 
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => PerfilView(idUsuario: idUsuario)));
+                }, 
                 child: ClipOval(
                         child: Image.memory(base64Decode(fotoPerfil), width: 8.h, height: 8.h,  fit: BoxFit.cover,)
                       ),
