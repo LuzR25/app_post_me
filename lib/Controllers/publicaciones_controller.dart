@@ -10,56 +10,38 @@ class PublicacionesController {
   ///Se conecta con la API de publicaciones del servidor local y crea una publicación.
   Future<dynamic> crearPublicacion(
       {required String foto,
-      required int idUsuario,
       required String descripcion,
+      required int idUsuario,
+      required String nombreUsuario,
+      required String fotoPerfil,
       required PublicacionProvider publicacionProvider}) async {
-    print("Aquí 8");
     final Map<String, dynamic> requestBody = {
       "foto": foto,
       "idUsuario": idUsuario,
       "descripcion": descripcion,
-      "nombreCuenta": publicacionProvider.usuario!.nombreUsuario,
-      "fotoPerfil": publicacionProvider.usuario!.fotoPerfil
+      "nombreCuenta": nombreUsuario,
+      "fotoPerfil": fotoPerfil
     };
 
-    print("Aquí 9");
-
     String body = jsonEncode(requestBody);
-    print("Aquí 205");
     final url = Uri.parse(apiPublicacionesCrear);
-    print("Aquí 206");
     int? statusCode;
 
     try {
-      print("Aquí 201");
       final response = await http
-          .post(url, body: body, headers: {'Content-Type': 'application/json'});
-      print("Aquí 202");
+          .post(url, body: body, headers: {"Accept": "application/json",
+      "Content-Type": 'application/json' });
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
-      print("Aquí 203");
 
       if (response.statusCode == 200) {
-        print("Aquí 200");
-        print("jsonData: $jsonData");
         Publicacion publicacion = Publicacion.fromJson(jsonData);
-
-        print("Aquí 1");
-        
         PublicacionesDatabaseController.insertarPublicacion(publicacion);
-
-        print("Aquí 2");
+        publicacionProvider.listaPublicacionesInicio= await obtenerPublicacionesTodas();
         publicacionProvider.listaPublicacionesUsuario = await PublicacionesDatabaseController.obtenerPublicaciones();
 
-        print("Aquí 3");
-
-        //Guardo datos de inicio de sesión
-        /* await DatabaseUsuarioController.insertarUsuario(usuario);
-        await ViajesController.obtenerViajes();
-        Preferences.estaSesionIniciada = true; */
         return true;
       } else {
-        print("No hubo, pero sí accedió. Status code: $statusCode");
         print(jsonData['error']);
         return false;
       }

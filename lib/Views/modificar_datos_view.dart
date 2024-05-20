@@ -1,15 +1,17 @@
 import 'dart:convert';
 
-import 'package:app_post_me/Controllers/controllers.dart';
-import 'package:app_post_me/Providers/providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
+import '../Controllers/controllers.dart';
 import '../Models/models.dart';
+import '../Providers/providers.dart';
 import '../Themes/app_themes.dart';
 import '../Widgets/widgets.dart';
+import '../blocs/blocs.dart';
 
 class ModificarDatosView extends StatefulWidget {
   //Usuario usuario;
@@ -23,6 +25,14 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
   var nombrePerfilController = TextEditingController();
   var nombreUsuarioController = TextEditingController();
   var passwordController = TextEditingController();
+  late ActualizacionBloc _actualizacionBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _actualizacionBloc = BlocProvider.of<ActualizacionBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,70 +75,72 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
         ),
         elevation: 0,
       ),
-      body: Padding(
-          padding: EdgeInsets.all(5.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //Foto de perfil
-                    ClipOval(
-                        child: publicacionProvider.fotoCambiar == null 
-                        ? Image.memory(base64Decode(publicacionProvider.usuario!.fotoPerfil), width: 16.h, height: 16.h,  fit: BoxFit.cover,)
-                        
-                        : Image.memory(publicacionProvider.fotoCambiar!, width: 16.h, height: 16.h,  fit: BoxFit.cover,)
-                      ),
-          
-                    _botonSeleccionarFoto(publicacionProvider)
-                  ],
-                ),
-
-                SizedBox(height: 2.h),
-          
-                //Campo 'Nombre del perfil'
-                encabezadoTextField('Nombre del perfil'),
-                SizedBox(height: 1.h),
-                _nombrePerfilTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-          
-                SizedBox(height: 2.h),
-          
-                //Campo 'Nombre de usuario'
-                encabezadoTextField('Nombre de usuario'),
-                SizedBox(height: 1.h),
-          
-                SizedBox(
-                  child: _nombreUsuarioTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-                ),
-                
-          
-                SizedBox(height: 2.h),
-          
-                //Campo 'Contraseña'
-                encabezadoTextField('Contraseña'),
-                SizedBox(height: 1.h),
-                _passwordTextFormField(
-                    enabledBorder: enabledBorder,
-                    focusedBorder: focusedBorder,
-                    errorBorder: errorBorder,
-                    focusedErrorBorder: focusedErrorBorder),
-          
-                SizedBox(height: 4.5.h),
-          
-                Center(child: _botonModificar(publicacionProvider))
-              ],
-            ),
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: EdgeInsets.all(5.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      //Foto de perfil
+                      ClipOval(
+                          child: publicacionProvider.fotoCambiar == null 
+                          ? Image.memory(base64Decode(publicacionProvider.usuario!.fotoPerfil), width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                          
+                          : Image.memory(publicacionProvider.fotoCambiar!, width: 16.h, height: 16.h,  fit: BoxFit.cover,)
+                        ),
+            
+                      _botonSeleccionarFoto(publicacionProvider)
+                    ],
+                  ),
+        
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Nombre del perfil'
+                  encabezadoTextField('Nombre del perfil'),
+                  SizedBox(height: 1.h),
+                  _nombrePerfilTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+            
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Nombre de usuario'
+                  encabezadoTextField('Nombre de usuario'),
+                  SizedBox(height: 1.h),
+            
+                  SizedBox(
+                    child: _nombreUsuarioTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+                  ),
+                  
+            
+                  SizedBox(height: 2.h),
+            
+                  //Campo 'Contraseña'
+                  encabezadoTextField('Contraseña'),
+                  SizedBox(height: 1.h),
+                  _passwordTextFormField(
+                      enabledBorder: enabledBorder,
+                      focusedBorder: focusedBorder,
+                      errorBorder: errorBorder,
+                      focusedErrorBorder: focusedErrorBorder),
+            
+                  SizedBox(height: 4.5.h),
+            
+                  Center(child: _botonModificar(publicacionProvider))
+                ],
+              ),
+        ),
       ),
     );
   }
@@ -195,20 +207,23 @@ class _ModificarDatosViewState extends State<ModificarDatosView> {
             nombreUsuarioController.text.isNotEmpty) {
           _ponerRuedaCargando(); //Mostramos rueda de carga
 
-          Usuario usuario = Usuario(idUsuario: publicacionProvider.usuario!.idUsuario, nombreUsuario: nombreUsuarioController.text, nombrePerfil: nombrePerfilController.text, fotoPerfil: base64Encode(publicacionProvider.fotoCambiar!), password: passwordController.text);
+          Usuario usuario = Usuario(idUsuario: publicacionProvider.usuario!.idUsuario, nombreUsuario: nombreUsuarioController.text, nombrePerfil: nombrePerfilController.text, fotoPerfil: publicacionProvider.fotoCambiar == null ? publicacionProvider.usuario!.fotoPerfil : base64Encode(publicacionProvider.fotoCambiar!), password: passwordController.text);
           
           //dynamic iniciaSesion = true;
           
           //* Manejo del acceso a la cuenta consumiento la API
-          dynamic iniciaSesion = await UsuarioController().actualizarDatos(
+          dynamic exito = await UsuarioController().actualizarDatos(
             usuario: usuario, 
             publicacionProvider: publicacionProvider);
           Navigator.of(context).pop(); //Quitamos rueda de carga
 
-          if (iniciaSesion == true) {
+          if (exito == true) {
             //Navigator.pushReplacementNamed(context, 'navegacion_app');
             publicacionProvider.mostrarToast('¡Datos modificados con éxito!');
-          } else if (iniciaSesion == false) {
+            publicacionProvider.fotoCambiar = null;
+            _actualizacionBloc.seModificoUsuario(true);
+            publicacionProvider.refrescarVista();
+          } else if (exito == false) {
             publicacionProvider.mostrarToast('Revisa tu conexión a internet');
           }
           setState(() {});

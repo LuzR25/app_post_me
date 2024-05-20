@@ -1,4 +1,6 @@
+import 'package:app_post_me/blocs/actualizacion/actualizacion_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -18,9 +20,18 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
   final _descripcionController = TextEditingController();
   final FocusNode _focusComentario = FocusNode();
   PublicacionesController publicacionesController = PublicacionesController();
+  late ActualizacionBloc _actualizacionBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _actualizacionBloc = BlocProvider.of<ActualizacionBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
+
     final publicacionProvider = Provider.of<PublicacionProvider>(context);
 
     return ListView(
@@ -81,30 +92,40 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
   TextButton botonPublicar(PublicacionProvider publicacionProvider) {
     return TextButton(
         onPressed: () async {
-          _ponerRuedaCargando();
+          if(publicacionProvider.fotoBase64 != null){
+            _ponerRuedaCargando();
 
-          print("Aquí 5");
+            dynamic resultado = await publicacionesController.crearPublicacion(
+                fotoPerfil: publicacionProvider.usuario!.fotoPerfil,
+                idUsuario: publicacionProvider.usuario!.idUsuario,
+                nombreUsuario: publicacionProvider.usuario!.nombreUsuario,
+                foto: publicacionProvider.fotoBase64!,
+                descripcion: _descripcionController.text,
+                publicacionProvider: publicacionProvider);
 
-          dynamic resultado = await publicacionesController.crearPublicacion(
-              foto: publicacionProvider.fotoBase64!,
-              idUsuario: 0,
-              descripcion: _descripcionController.text,
-              publicacionProvider: publicacionProvider);
+            Navigator.of(context).pop(); //Quitamos rueda de carga
 
-          print("Aquí 6");
+            if (resultado == true) {
+              publicacionProvider.mostrarToast("Publicación creada");
 
-          Navigator.of(context).pop(); //Quitamos rueda de carga
+              //* Limpiamos campos después del éxito
+              _descripcionController.text = "";
+              publicacionProvider.fotoBase64 = null;
+              publicacionProvider.bytesFoto = null;
+              
+              _actualizacionBloc.seCreoPublicacion(true);
+              
+              publicacionProvider.refrescarVista();
 
-          if (resultado == true) {
-            //! Hace falta limpiar los campos después de hecha la publicación
-            publicacionProvider.mostrarToast("¡Lo hicimos, Victor!");
-            //* Liampiamos campos después del éxito
-            _descripcionController.text = "";
-            publicacionProvider.fotoBase64 = null;
-            publicacionProvider.bytesFoto = null;
+              //setState(() {});
+            } else {
+              publicacionProvider
+                  .mostrarToast("Ha ocurrido un error, inténtelo de nuevo");
+            }
           } else {
             publicacionProvider
-                .mostrarToast("Ha ocurrido un error, inténtelo de nuevo");
+                  .mostrarToast("Tienes que elegir una foto para realizar una publicación");
+
           }
         },
         style: ButtonStyle(

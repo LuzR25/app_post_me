@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../Models/models.dart';
+import '../Preferences/preferences.dart';
 import '../Views/views.dart';
 
 class AppRoutes {
-  static String initialRoute = 
-  //Preferences.estaSesionIniciada ?  'home' : 'login';
-  'login';
+  static String initialRoute = Preferences.estaSesionIniciada ?  'navegacion_app' : 'login';
 
   static final rutasApp = <RouteModel>[
     RouteModel(route: 'login', name: 'Login', screen: const LoginView()),

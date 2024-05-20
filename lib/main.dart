@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:app_post_me/Providers/providers.dart';
 import 'package:app_post_me/Routes/routes.dart';
 import 'package:app_post_me/Themes/app_themes.dart';
+import 'package:app_post_me/blocs/actualizacion/actualizacion_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
@@ -25,7 +27,7 @@ Future<void> main() async {
   HttpOverrides.global = PostHttpOverrides();
   //Preferences.estaLicenciaActivada = await VerifyLicense.fetchStatusLicencia();
   
-  runApp(
+  /* runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PublicacionProvider()),
@@ -33,19 +35,17 @@ Future<void> main() async {
       child: const MyApp(),
     ),
     
-  );
+  ); */
 
-  /* runApp(MultiBlocProvider(
+  runApp(MultiBlocProvider(
     providers: [
-      BlocProvider(create: (context) => GpsBloc()),
-      BlocProvider(create: (context) => CameraBloc()),
-      BlocProvider(create: (context) => RegistersBloc()),
+      BlocProvider(create: (context) => ActualizacionBloc()),
     ],
     child: const AppState(),
-  )); */
+  ));
 }
 
-/* class AppState extends StatelessWidget {
+class AppState extends StatelessWidget {
   const AppState({super.key});
 
   @override
@@ -53,13 +53,13 @@ Future<void> main() async {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => PublicacionProvider()),
-        /* ChangeNotifierProvider(create: (_) => PageControllerProvider()),
-        ChangeNotifierProvider(create: (_) => LicenciasProvider()), */
+        ChangeNotifierProvider(create: (_) => PageControllerProvider()),
+        /*ChangeNotifierProvider(create: (_) => LicenciasProvider()), */
       ],
       child: const MyApp()
     );
   }
-} */
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

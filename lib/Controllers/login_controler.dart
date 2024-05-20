@@ -49,6 +49,7 @@ class LoginController {
         //a su información durante su navegación en la aplicación
         publicacionProvider.usuario = usuario;
         publicacionProvider.listaPublicacionesUsuario = listaPublicaciones;
+        Preferences.estaSesionIniciada = true;
 
         return true;
       } else {

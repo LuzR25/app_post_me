@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app_post_me/Providers/providers.dart';
 import 'package:app_post_me/Themes/app_themes.dart';
 import 'package:flutter/material.dart';
@@ -217,15 +219,17 @@ class _RegistroViewState extends State<RegistroView> {
           _ponerRuedaCargando(); //Mostramos rueda de carga
           
           //* Manejo del acceso a la cuenta consumiento la API
-          dynamic iniciaSesion = await UsuarioController();
+          dynamic exito = await UsuarioController().crearUsuario(
+            nombreUsuario: nombreUsuarioController.text, 
+            nombrePerfil: nombrePerfilController.text, 
+            fotoPerfil: base64Encode(fotoPerfil), 
+            contra: passwordController.text) ;
           Navigator.of(context).pop(); //Quitamos rueda de carga
 
-          if (iniciaSesion == true) {
-            Navigator.pushReplacementNamed(context, 'navegacion_app');
-          } else if (iniciaSesion == false) {
-            publicacionProvider.mostrarToast('Revisa tu conexión a internet');
+          if (exito == true) {
+            publicacionProvider.mostrarToast('¡Usuario creado con éxito!');
+//            setState(() {});
           }
-          setState(() {});
         } else {
           PublicacionProvider().mostrarToast(
               'No puedes dejar ningún campo vacío y debes seleccionar una foto de perfil');
