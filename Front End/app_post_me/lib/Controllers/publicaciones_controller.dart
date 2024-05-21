@@ -28,17 +28,12 @@ class PublicacionesController {
     int? statusCode;
 
     try {
-      print("Aquí 2");
-      final response = await http.post(url, body: body, headers: {
-        "Accept": "application/json",
-        "Content-Type": 'application/json'
-      });
-      print("Aquí 3");
+      final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+
       statusCode = response.statusCode;
-      print("Aquí 4");
+
       final jsonData = jsonDecode(response.body);
 
-      print("Aquí 1");
       print("statusCode: $statusCode");
 
       if (response.statusCode == 200) {
@@ -71,7 +66,6 @@ class PublicacionesController {
       //final jsonData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        print(jsonDecode(response.body));
         return _crearListaPublicaciones(response.body);
       } else {
         return [];

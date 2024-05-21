@@ -22,14 +22,13 @@ class UsuarioController {
       'contrasena': contra
     };
 
-    String body = jsonEncode(requestBody);
+    final body = jsonEncode(requestBody);
     String formBody = Uri.encodeQueryComponent(body);
     final url = Uri.parse(apiUsuarios);
     int? statusCode;
 
     try {
-      final response = await http.post(url, body: body, headers: {"Accept": "application/json",
-      "Content-Type": 'application/json' });
+      final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
 
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
@@ -39,7 +38,7 @@ class UsuarioController {
       if (response.statusCode == 200) {
         return true;
       } else {
-        PublicacionProvider().mostrarToast(jsonData['error']);
+        PublicacionProvider().mostrarToast(jsonData);
         return false;
       }
     } catch (e) {
@@ -59,18 +58,13 @@ class UsuarioController {
     final url = Uri.parse("$apiUsuarios/${usuario.idUsuario}");
     int? statusCode;
 
-    dynamic jsonDat;
-
     try {
-      final response = await http.put(url, body: body, headers: {"Accept": "application/json",
-      "Content-Type": 'application/json' });
+      final response = await http.put(url, body: body, headers: {'Content-Type': 'application/json'});
 
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
-      jsonDat = jsonData;
 
       if (response.statusCode == 200) {
-        print("$jsonData");
         Usuario usuario = Usuario.fromJson(jsonData);
 
         //Guardo datos de inicio de sesión
@@ -92,7 +86,6 @@ class UsuarioController {
         PublicacionProvider().mostrarToast(jsonData['error']);
       }
     } catch (e) {
-      print(jsonDat);
       if (kDebugMode) {
         print('Error en $e');
       }
@@ -105,8 +98,7 @@ class UsuarioController {
     int? statusCode;
 
     try {
-      final response = await http.get(url, headers:{"Accept": "application/json",
-      "Content-Type": 'application/json' });
+      final response = await http.get(url, headers: {'Content-Type': 'application/json'});
 
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
