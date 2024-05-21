@@ -9,9 +9,6 @@ Las personas que colaboramos en este proyecto fuimos:
 - Luz Rocío García Peña
 - Angel David Ricalde Ché
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
 ## Objetivo del proyecto
 
 Crear una aplicación que se llamará “Post Me!” y que permitirá la publicación de imágenes con una descripción mediante la creación y edición de una cuenta.
