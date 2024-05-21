@@ -87,3 +87,9 @@ Cerrará la sesión activa en la aplicación.
   <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Tarjeta%20de%20publicación.png">
 </p>
 
+## Ejemplo de funcionamiento
+
+
+## Conclusiones del proyecto
+El proyecto Post Me ha demostrado la viabilidad de desarrollar una aplicación para compartir fotos utilizando una arquitectura de sistema distribuido. Esta arquitectura ofrece ventajas significativas en términos de escalabilidad, disponibilidad, tolerancia a fallos y consistencia de datos, lo que la convierte en una opción adecuada para aplicaciones que manejan grandes volúmenes de datos y tráfico de usuarios.
+
