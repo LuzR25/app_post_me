@@ -24,9 +24,13 @@ Crear una aplicación que se llamará “Post Me!” y que permitirá la publica
 ## Requisitos funcionales 
 
 **RF01 – Iniciar sesión**
+
 Muestra la interfaz donde se puede introducir el nombre de usuario y la contraseña del usuario para poder iniciar sesión y acceder a su cuenta.
+
 **RF02 – Registrar usuario**
+
 Muestra la interfaz donde se pueden introducir el nombre del perfil, nombre de usuario, la contraseña y seleccionar una foto elegida de galería para poder registrarse y crearse una cuenta.
+
 **RF03 – Ver feed de contenido**
 La aplicación mostrará al usuario un flujo de publicaciones de los usuarios registrados en la base de datos.
 **RF04 – Ver perfil**
