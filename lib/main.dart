@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app_post_me/Preferences/preferences.dart';
 import 'package:app_post_me/Providers/providers.dart';
 import 'package:app_post_me/Routes/routes.dart';
 import 'package:app_post_me/Themes/app_themes.dart';
@@ -23,7 +24,7 @@ Future<void> main() async {
   //Para evitar error cuando se inicializan las preferencias
   WidgetsFlutterBinding.ensureInitialized(); 
 
-  //await Preferences.init();
+  await Preferences.init();
   HttpOverrides.global = PostHttpOverrides();
   //Preferences.estaLicenciaActivada = await VerifyLicense.fetchStatusLicencia();
   
