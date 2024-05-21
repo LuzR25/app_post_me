@@ -72,3 +72,18 @@ Cerrará la sesión activa en la aplicación.
   <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Diagrama%20de%20casos%20de%20uso.png">
 </p>
 
+## Vistas 
+
+<p align="center">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Iniciar%20sesión.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Registro.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Inicio.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Crear%20publicación.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Perfil.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Perfil%20de%20usuario%20externo.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Configuración.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Editar%20datos%20de%20cuenta.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Acerca%20de.png">
+  <img src="https://github.com/LuzR25/app_post_me/blob/main/Im%C3%A1genes/Tarjeta%20de%20publicación.png">
+</p>
+
