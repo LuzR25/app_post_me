@@ -28,21 +28,30 @@ class PublicacionesController {
     int? statusCode;
 
     try {
-      final response = await http
-          .post(url, body: body, headers: {"Accept": "application/json",
-      "Content-Type": 'application/json' });
+      print("Aquí 2");
+      final response = await http.post(url, body: body, headers: {
+        "Accept": "application/json",
+        "Content-Type": 'application/json'
+      });
+      print("Aquí 3");
       statusCode = response.statusCode;
+      print("Aquí 4");
       final jsonData = jsonDecode(response.body);
+
+      print("Aquí 1");
+      print("statusCode: $statusCode");
 
       if (response.statusCode == 200) {
         Publicacion publicacion = Publicacion.fromJson(jsonData);
         PublicacionesDatabaseController.insertarPublicacion(publicacion);
-        publicacionProvider.listaPublicacionesInicio= await obtenerPublicacionesTodas();
-        publicacionProvider.listaPublicacionesUsuario = await PublicacionesDatabaseController.obtenerPublicaciones();
+        publicacionProvider.listaPublicacionesInicio =
+            await obtenerPublicacionesTodas();
+        publicacionProvider.listaPublicacionesUsuario =
+            await PublicacionesDatabaseController.obtenerPublicaciones();
 
         return true;
       } else {
-        print(jsonData['error']);
+        print("jsonData: ${jsonData['error']}");
         return false;
       }
     } catch (e) {
@@ -55,19 +64,21 @@ class PublicacionesController {
     //int? statusCode;
 
     try {
-      final response = await http.get(url, headers: {'Content-Type': 'application/json'});
+      final response =
+          await http.get(url, headers: {'Content-Type': 'application/json'});
 
       //statusCode = response.statusCode;
       //final jsonData = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
+        print(jsonDecode(response.body));
         return _crearListaPublicaciones(response.body);
       } else {
         return [];
       }
     } catch (e) {
-      return [];
       print('Error en $e');
+      return [];
     }
   }
 
@@ -75,16 +86,15 @@ class PublicacionesController {
   ///hasta entonces del usuario cuyo id se pase en los parámetros suponiendo
   ///que el query se realice con éxito; en el caso contrario regresará false.
   Future<dynamic> obtenerPublicacionesUsuario(int idUsuario) async {
-    final Map<String, dynamic> requestBody = {
-      "idUsuario": idUsuario
-    };
+    final Map<String, dynamic> requestBody = {"idUsuario": idUsuario};
 
     String body = jsonEncode(requestBody);
     final url = Uri.parse(apiPublicacionesUsuario);
     //int? statusCode;
 
     try {
-      final response = await http.post(url, body: body, headers: {'Content-Type': 'application/json'});
+      final response = await http
+          .post(url, body: body, headers: {'Content-Type': 'application/json'});
 
       //statusCode = response.statusCode;
       //final jsonData = jsonDecode(response.body);
@@ -95,15 +105,13 @@ class PublicacionesController {
         return false;
       }
     } catch (e) {
-      return false;
       print('Error en $e');
+      return false;
     }
   }
 
   ///Crea un List de tipo Publicacion a partir de un objeto json.
   List<Publicacion> _crearListaPublicaciones(String jsonPublicaciones) =>
-      List<Publicacion>.from(jsonDecode(jsonPublicaciones).map((pubActual) =>
-        Publicacion.fromJson(pubActual)
-      ));
-
+      List<Publicacion>.from(jsonDecode(jsonPublicaciones)
+          .map((pubActual) => Publicacion.fromJson(pubActual)));
 }

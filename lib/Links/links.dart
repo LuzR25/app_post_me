@@ -1,5 +1,5 @@
 
-const String baseURL = "http://192.168.5.29";
+const String baseURL = "http://192.168.181.224";
 String apiPublicacionesUsuario = "$baseURL/postme/public/api/publicaciones";
 String apiPublicacionesCrear = "$baseURL/postme/public/api/publicaciones/save";
 String apiPublicacionesObtener = "$baseURL/postme/public/api/publicaciones/obtener";

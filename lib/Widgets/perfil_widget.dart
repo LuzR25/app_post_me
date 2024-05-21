@@ -12,17 +12,17 @@ import '../Widgets/widgets.dart';
 import '../blocs/blocs.dart';
 
 class PerfilWidget extends StatefulWidget {
-  final bool soyUsuarioLogeado;
-  const PerfilWidget({Key? key, required this.soyUsuarioLogeado})
+  const PerfilWidget({Key? key})
       : super(key: key);
 
   @override
   State<PerfilWidget> createState() => _PerfilWidgetState();
 }
 
-class _PerfilWidgetState extends State<PerfilWidget> {
+class _PerfilWidgetState extends State<PerfilWidget> with AutomaticKeepAliveClientMixin{
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final publicacionProvider = Provider.of<PublicacionProvider>(context);
 
     if (publicacionProvider.usuario == null) {
@@ -93,9 +93,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                     ),
                     SizedBox(height: 2.h),
                     Text(
-                      widget.soyUsuarioLogeado
-                          ? "Mis publicaciones"
-                          : "Publicaciones",
+                      "Mis publicaciones",
                       style: TextStyle(
                           fontSize: 18.sp, fontWeight: FontWeight.bold),
                     ),
@@ -117,9 +115,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                     .nombreUsuario,
                                 fechaPublicacion: publicacionProvider
                                     .listaPublicacionesUsuario[index].fecha,
-                                descripcion: publicacionProvider
-                                    .listaPublicacionesUsuario[index]
-                                    .descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
+                                descripcion: publicacionProvider.listaPublicacionesUsuario[index].descripcion == null ? "" : publicacionProvider.listaPublicacionesUsuario[index].descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
                                 fotoPerfil: publicacionProvider
                                     .listaPublicacionesUsuario[index]
                                     .fotoPerfil,
@@ -169,6 +165,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                 children: [
                   ClipOval(
                       child: Image.memory(
+                        //"assets/images/fondo_foto.png"
                     base64Decode(publicacionProvider.usuario!.fotoPerfil),
                     width: 16.h,
                     height: 16.h,
@@ -202,9 +199,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
               ),
               SizedBox(height: 2.h),
               Text(
-                widget.soyUsuarioLogeado
-                    ? "Mis publicaciones"
-                    : "Publicaciones",
+                "Mis publicaciones",
                 style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 1.h),
@@ -223,9 +218,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                           .listaPublicacionesUsuario[index].nombreUsuario,
                       fechaPublicacion: publicacionProvider
                           .listaPublicacionesUsuario[index].fecha,
-                      descripcion: publicacionProvider
-                          .listaPublicacionesUsuario[index]
-                          .descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
+                      descripcion: publicacionProvider.listaPublicacionesUsuario[index].descripcion == null ? "" : publicacionProvider.listaPublicacionesUsuario[index].descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
                       fotoPerfil: publicacionProvider
                           .listaPublicacionesUsuario[index].fotoPerfil,
                       imagen: publicacionProvider
@@ -245,4 +238,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
 
     return true;
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -16,9 +16,10 @@ class InicioWidget extends StatefulWidget {
   State<InicioWidget> createState() => _InicioWidgetState();
 }
 
-class _InicioWidgetState extends State<InicioWidget> {
+class _InicioWidgetState extends State<InicioWidget> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder(
           future: PublicacionesController().obtenerPublicacionesTodas(), 
           builder: ((context, snapshot) {
@@ -39,10 +40,7 @@ class _InicioWidgetState extends State<InicioWidget> {
                         setState(() {});
                       }
                     },
-                    child: const SizedBox(width: 0, height: 0,),
-                  ),
-
-                  ListView.separated(
+                    child: ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     separatorBuilder: (context, index) => const Divider(
@@ -53,10 +51,11 @@ class _InicioWidgetState extends State<InicioWidget> {
                       idUsuario: publicaciones[index].idUsuario,
                       nombreUsuario: publicaciones[index].nombreUsuario,
                       fechaPublicacion: publicaciones[index].fecha,
-                      descripcion: publicaciones[index].descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
+                      descripcion: publicaciones[index].descripcion == null ? "" : publicaciones[index].descripcion!, // == "" ? "" : publicaciones[index].descripcion!,
                       fotoPerfil: publicaciones[index].fotoPerfil,
                       imagen: publicaciones[index].foto)
-                  )
+                  ),
+                  ),
                 ],
               );
             } else {
@@ -74,4 +73,7 @@ class _InicioWidgetState extends State<InicioWidget> {
           })
         );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }

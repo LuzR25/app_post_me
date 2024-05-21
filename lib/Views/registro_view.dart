@@ -217,6 +217,8 @@ class _RegistroViewState extends State<RegistroView> {
             passwordController.text.isNotEmpty &&
             fotoPerfil != null) {
           _ponerRuedaCargando(); //Mostramos rueda de carga
+
+          //print("nombreUsuario: ${nombreUsuarioController.text}, nombrePerfil: ${nombrePerfilController.text}, contra: ${passwordController.text}, foto: ${base64Encode(fotoPerfil)}");
           
           //* Manejo del acceso a la cuenta consumiento la API
           dynamic exito = await UsuarioController().crearUsuario(

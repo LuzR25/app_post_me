@@ -16,7 +16,7 @@ class CrearPublicacionWidget extends StatefulWidget {
   State<CrearPublicacionWidget> createState() => _CrearPublicacionWidgetState();
 }
 
-class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
+class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> with AutomaticKeepAliveClientMixin {
   final _descripcionController = TextEditingController();
   final FocusNode _focusComentario = FocusNode();
   PublicacionesController publicacionesController = PublicacionesController();
@@ -31,6 +31,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
 
     final publicacionProvider = Provider.of<PublicacionProvider>(context);
 
@@ -106,7 +107,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
             Navigator.of(context).pop(); //Quitamos rueda de carga
 
             if (resultado == true) {
-              publicacionProvider.mostrarToast("Publicación creada");
+              publicacionProvider.mostrarToast("¡Publicación creada con éxito!");
 
               //* Limpiamos campos después del éxito
               _descripcionController.text = "";
@@ -151,4 +152,7 @@ class _CrearPublicacionWidgetState extends State<CrearPublicacionWidget> {
       },
     );
   }
+  
+  @override
+  bool get wantKeepAlive => true;
 }

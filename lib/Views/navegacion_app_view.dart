@@ -15,6 +15,12 @@ class NavegacionAppView extends StatefulWidget {
 class _NavegacionAppViewState extends State<NavegacionAppView> {
   int _selectedIndex = 0;
   PageControllerProvider pageControllerProv = PageControllerProvider();
+  final List<Widget> _pages = [
+    const InicioWidget(),
+    const CrearPublicacionWidget(),
+    const PerfilWidget(),
+    const ConfiguracionWidget()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +42,7 @@ class _NavegacionAppViewState extends State<NavegacionAppView> {
       body: PageView.builder(
         itemCount: 4,
         itemBuilder: (context, index) {
-          return PageItem(index: index);
+          return _pages[index];
         },
         scrollDirection: Axis.horizontal,
         controller: pageControllerProv.pageController,
@@ -118,7 +124,7 @@ class _PageItemState extends State<PageItem>
     } else if (widget.index == 1) {
       return const CrearPublicacionWidget();
     } else if (widget.index == 2) {
-      return const PerfilWidget(soyUsuarioLogeado: true,);
+      return const PerfilWidget();
     } else {
       return const ConfiguracionWidget();
     }

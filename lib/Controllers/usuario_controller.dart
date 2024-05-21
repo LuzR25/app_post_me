@@ -23,7 +23,7 @@ class UsuarioController {
     };
 
     String body = jsonEncode(requestBody);
-    //String formBody = Uri.encodeQueryComponent(body);
+    String formBody = Uri.encodeQueryComponent(body);
     final url = Uri.parse(apiUsuarios);
     int? statusCode;
 
@@ -33,6 +33,8 @@ class UsuarioController {
 
       statusCode = response.statusCode;
       final jsonData = jsonDecode(response.body);
+
+      print(response.statusCode);
 
       if (response.statusCode == 200) {
         return true;
